@@ -5,6 +5,7 @@
 		<th>User Name</th>
 		<th>Date</th>
 		<th>Had Meal</th>
+    <th>Action</th>
 		</tr>
 	</thead>
    <tbody>
@@ -12,8 +13,8 @@
 		<% begin %>
 		<tr>
       <td> <%= link_to "#{lunchdetail.user.name}", edit_lunch_detail_path(lunchdetail) %> </td>
-			<td> <%= lunchdetail.date%> </td>
-			<td> <%= lunchdetail.had_lunch%></td>
+			<td> <%= lunchdetail.date.strftime("%b %e, %Y")%> </td>
+			<td> <%= lunchdetail.had_lunch? ? 'Yes' : 'No' %></td>
 			<td> <%= link_to 'Destroy', lunch_detail_path(lunchdetail),:method => :delete , :data => { :confirm => 'Are you sure?' } %></td>
 		</tr>
 	    <% rescue Exception => e
@@ -24,6 +25,6 @@
 	</tbody>		
 	</table>
 	<p>
-		<%= link_to 'Meal Register', new_lunch_detail_path, :class => "btn btn-primary"%>
+		<%= link_to 'Meal Register', new_daily_invoice_path, :class => "btn btn-primary"%>
 	</p>
 	

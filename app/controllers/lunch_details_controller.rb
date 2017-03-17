@@ -9,11 +9,11 @@ class LunchDetailsController < ApplicationController
 
   def create
     params[:lunch_detail][:user_id].each do |user_id|
-      @lunchdetail=LunchDetail.new(lunch_detail_params)
+      @lunchdetail = LunchDetail.new(lunch_detail_params)
       @lunchdetail.user_id = user_id
       @lunchdetail.save
     end
-    redirect_to :action => :index
+      redirect_to :action => :index
   end
 
   def show
@@ -25,12 +25,12 @@ class LunchDetailsController < ApplicationController
   end
 
   def update
-    @lunchdetail=LunchDetail.find(params[:id])
-    if @lunchdetail.update(lunch_detail_params)
-      redirect_to @lunchdetail
-    else
-      render 'edit'
+    @lunchdetail = LunchDetail.find(params[:id])
+    params[:lunch_detail][:user_id].each do |user_id|
+      @lunchdetail.update(lunch_detail_params)
+      @lunchdetail.user_id = user_id
     end
+      redirect_to :action => :index
   end
 
   def destroy

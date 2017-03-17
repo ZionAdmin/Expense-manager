@@ -1,52 +1,66 @@
 <div class="panel panel-danger">
-  <div class="panel-heading">DailyInvoices</div>
+  <div class="panel-heading">Meal Register</div>
   <div class="panel-body">
-<%= form_for(@dailyinvoice)do |f| %>
+    <div class="row">
 
-	<%if @dailyinvoice.errors.any? %>
-	<div id="error_explaination">
-		<h2><%= pluralize(@dailyinvoice.errors.count,"error") %> prohibited this user from being saved:</h2>
-		<ul>
-			<% @dailyinvoice.errors.full_messages.each do |message| %>
-			<li><%= message %>
-			</li>
-			<% end %>
-		</ul>	
-	</div>
-	<% end %>
-	 <div class="form-group">
-     <%= f.label :Restaurant_Name %>
-	 <%= f.text_field  :restaurant_name ,:class => 'form-control' %>
-    </div>
-	<div class="form-group">
-    <%= f.label :Amount %>
-	  <%= f.text_field :amount ,:class => 'form-control' %>
-    </div>
-	  <div class="form-group">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-sm-3" >
-    <%= f.label :Date %>
-	  <%= f.text_field :date ,:class => 'form-control',:id => 'date' %>
-    </div>
-        </div>
-      </div>
-    </div>
-            <div class="form-group">
-    <%= f.label :Bill %>
-	  <%= f.file_field :image ,:class => 'form-control' %>
-            </div>
+      <%= form_for(@dailyinvoice) do |f| %>
+          <div class="col-sm-6">
+            <%= f.fields_for :lunch_detail do |l| %>
+                <%= l.hidden_field :daily_invoice_id %>
+                <%= l.hidden_field :date %>
+                <div class="form-group">
+                  <%= l.label "Users:" %><br/>
+                  <%= l.collection_check_boxes :user_id, User.all, :id, :name do |b| %>
+                      <div class="checkbox-inline">
+                        <%= b.check_box %>
+                        <%= b.label %>
+                      </div>
+                  <% end %>
+                </div>
+                <div class="form-group">
+                  <%= l.label :Had_Lunch %>
+                  <%= l.select :had_lunch, options_for_select({'Yes': '1', 'No':'0'}), {class: 'form-control', id: 'hadlunch'} %>
+                </div>
+                </div>
 
-	   <button type="save" class="btn btn-success btn-cons">Save</button>
-      <%= link_to 'Cancel', daily_invoices_path, :class => "btn btn-danger btn-cons" %>
+                <!--Daily Invoices-->
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <%= f.label :Restaurant_Name %>
+                    <%= f.text_field :restaurant_name, :class => 'form-control' %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :Amount %>
+                    <%= f.text_field :amount, :class => 'form-control' %>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-5">
+                        <%= f.label :Date %>
+                        <%= f.text_field :date, :class => 'form-control date' %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.label :Bill %>
+                    <%= f.file_field :image, :class => 'form-control' %>
+                  </div>
+                </div>
+                <!--end-->
 
-	   <% end %>
+                <div class="form-group text-center">
+                  <button type="save" class="btn btn-success btn-cons">Save</button>
+                  <%= link_to 'Cancel', lunch_details_path, :class => "btn btn-danger btn-cons" %>
+                </div>
+            <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
+
+</div>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $("#date").datepicker({dateFormat: "yy-mm-dd"});
-    });
+  $(document).ready(function () {
+    $(".date").datepicker({dateFormat: "yy-mm-dd"});
+  });
 </script>
-
-
