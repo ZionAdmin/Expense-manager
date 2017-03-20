@@ -30,19 +30,19 @@ class DailyInvoicesController < ApplicationController
     end
     end
     if @mealexpense.save
-      redirect_to :action => :index
+      redirect_to expenses_url
     else
       render 'new'
     end
   end
 
-  #
-  # edit
-  #
-  def edit
-    @dailyinvoice=DailyInvoice.find(params[:id])
-    @dailyinvoice.expenses.build
-  end
+  # #
+  # # edit
+  # #
+  # def edit
+  #   @dailyinvoice = DailyInvoice.find(params[:id])
+  #   @dailyinvoice.expenses.build
+  # end
 
   #
   # show
@@ -67,7 +67,7 @@ class DailyInvoicesController < ApplicationController
       end
     end
     if @mealexpense.update
-      redirect_to expenses_path
+      redirect_to expenses_url
     else
       render 'edit'
     end
@@ -79,7 +79,7 @@ class DailyInvoicesController < ApplicationController
   def destroy
     @dailyinvoice=DailyInvoice.find(params[:id])
     @dailyinvoice.destroy
-    redirect_to expenses_path
+    redirect_to expenses_url
   end
 
   #

@@ -8,6 +8,14 @@ class MealExpensesController < ApplicationController
     @dailyinvoice.expenses.build
   end
 
+  #
+  # edit
+  #
+  def edit
+    @dailyinvoice = DailyInvoice.find(params[:id])
+    @dailyinvoice.expenses.build
+  end
+
   # def create
   #   params[:lunch_detail][:user_id].each do |user_id|
   #     @lunchdetail = LunchDetail.new(lunch_detail_params)
