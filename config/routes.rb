@@ -1,7 +1,11 @@
   Rails.application.routes.draw do
-     root "lunch_details#index"
+     root "expenses#index"
      resources :users
-     resources :lunch_details
+     resources :expenses
+     resources :meal_expenses, controller: "meal_expenses", type: "MealExpense"
+     resources :fruit_expenses, controller: "expenses", type: "FruitExpense"
+     resources :snak_expenses, controller: "expenses", type: "SnakExpense"
+     # resources :lunch_details
      resources :daily_invoices
      match "daily_details" => "daily_invoices#daily_details", :as => :daily_details, :via => [:get, :post]
      match "/"=> "expense_manager#dashboard",:via => [:get, :post]

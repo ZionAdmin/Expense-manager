@@ -1,44 +1,90 @@
 class DailyInvoicesController < ApplicationController
 
+  #
+  # new
+  #
   def new
     @dailyinvoice = DailyInvoice.new
-    @dailyinvoice.build_lunch_detail
+    @dailyinvoice.expenses.build
   end
 
+  #
+  # index
+  #
   def index
     @dailyinvoices = DailyInvoice.order('created_at')
   end
 
+  #
+  # create
+  #
   def create
-   DailyInvoice.save_lunch_details# = LunchDetail.new(:daily_invoice_id => @dailyinvoice.id, :date => @dailyinvoice.date, :had_lunch => params[:daily_invoice][:lunch_detail][:had_lunch])
-   redirect_to :action => :index
+    @dailyinvoice = DailyInvoice.new(daily_invoice_params)
+    @dailyinvoice.save
+    user_ids = params[:daily_invoice][:expense][:user_ids]
+    unless user_ids.nil?
+    user_ids.each do |user_id|
+      @mealexpense = MealExpense.new(daily_invoice_id: @dailyinvoice.id, date: @dailyinvoice.date, had_lunch: params[:daily_invoice][:expense][:had_lunch])
+      @mealexpense.user_id = user_id
+      @mealexpense.save
+    end
+    end
+    if @mealexpense.save
+      redirect_to :action => :index
+    else
+      render 'new'
+    end
   end
 
+  #
+  # edit
+  #
   def edit
     @dailyinvoice=DailyInvoice.find(params[:id])
+    @dailyinvoice.expenses.build
   end
 
-  def show
-    redirect_to :action => :daily_details
-    @dailyinvoice=DailyInvoice.find(params[:id])
-  end
+  #
+  # show
+  #
+  # def show
+  #   redirect_to :action => :daily_details
+  #   @dailyinvoice=DailyInvoice.find(params[:id])
+  # end
 
+  #
+  # update
+  #
   def update
     @dailyinvoice=DailyInvoice.find(params[:id])
-    if @dailyinvoice.update(daily_invoice_params)
-
-      redirect_to @dailyinvoice
+    @dailyinvoice.update(daily_invoice_params)
+    user_ids = params[:daily_invoice][:expense][:user_ids]
+    unless user_ids.nil?
+      user_ids.each do |user_id|
+        puts user_id
+        @mealexpense = MealExpense.update(daily_invoice_id: @dailyinvoice.id, date: @dailyinvoice.date, had_lunch: params[:daily_invoice][:expense][:had_lunch])
+        @mealexpense.user_id = user_id
+      end
+    end
+    if @mealexpense.update
+      redirect_to expenses_path
     else
       render 'edit'
     end
   end
 
+  #
+  # destroy
+  #
   def destroy
     @dailyinvoice=DailyInvoice.find(params[:id])
     @dailyinvoice.destroy
-    redirect_to daily_invoices_path
+    redirect_to expenses_path
   end
 
+  #
+  # daily_details
+  #
   def daily_details
     @daily_invoices = DailyInvoice.where("date = ?", params['date'])
     if request.post?
