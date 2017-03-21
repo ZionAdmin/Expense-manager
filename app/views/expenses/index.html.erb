@@ -1,6 +1,6 @@
 <h1>Expense Details</h1>
 <p>
-  <%= link_to 'Meal Register', new_meal_expense_path, :class => "btn btn-primary"%>
+  <%= link_to 'Add Expense', new_expense_path, :class => "btn btn-primary"%>
 </p>
 <table class="table table-bordered">
   <thead>
@@ -10,7 +10,8 @@
     <th>Had Meal</th>
     <th>Restaurant Name</th>
     <th>Amount</th>
-    <th>Download/View</th>
+    <th>Type</th>
+    <th>Download</th>
     <th>Action</th>
   </tr>
   </thead>
@@ -19,13 +20,14 @@
       <% begin %>
           <tr>
             <td><%= expense.date.strftime("%b %e, %Y")%> </td>
-            <td><%= link_to "#{expense.user.name}", edit_expense_path(expense) %> </td>
+            <td><%= link_to "#{expense.user.name}", edit_expense_path(expense.daily_invoice) %> </td>
             <td><%= expense.had_lunch? ? 'Yes' : 'No' %></td>
             <td><%= expense.daily_invoice.restaurant_name %></td>
             <td><%= expense.daily_invoice.amount %></td>
+            <td><%= expense.type %></td>
             <td><%= link_to "ViewBill", expense.daily_invoice.image.url, download: "ViewBill" %></td>
-            <td><%= link_to 'Edit', edit_meal_expense_path(expense.daily_invoice) %> |
-             <%= link_to 'Destroy', meal_expense_path(expense.daily_invoice),:method => :delete,:data => { :confirm => 'Are you sure?' } %></td>
+            <td><%= link_to 'Edit', edit_expense_path(expense.daily_invoice) %> |
+             <%= link_to 'Destroy', expense_path(expense.daily_invoice),:method => :delete,:data => { :confirm => 'Are you sure?' } %></td>
           </tr>
       <% rescue Exception => e
            puts "user doesnot exists"
