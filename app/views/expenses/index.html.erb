@@ -84,8 +84,8 @@
           <tr>
             <th>Date</th>
             <th>Name</th>
-            <th>Had Meal</th>
             <th>Restaurant Name</th>
+            <th>Had Meal</th>
             <th>Amount</th>
             <th>Type</th>
             <th>Download</th>
@@ -97,8 +97,8 @@
               <tr>
                 <td><%= expense.date.strftime("%b %e, %Y") %> </td>
                 <td><%= link_to "#{expense.user.name}", edit_expense_path(expense.daily_invoice) %> </td>
-                <td><%= expense.had_lunch? ? 'Yes' : 'No' %></td>
                 <td><%= expense.daily_invoice.restaurant_name %></td>
+                <td><%= expense.had_lunch? ? 'Yes' : 'No' %></td>
                 <td><%= expense.daily_invoice.amount %></td>
                 <td><%= expense.type %></td>
                 <td><%= link_to "ViewBill", expense.daily_invoice.image.url, download: "ViewBill" %></td>
@@ -113,7 +113,7 @@
               <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span></button>
-                <p class="text-center"> No results were found </p>
+                <p class="text-center"> No records were found </p>
               </div>
             </div>
         <% end %>

@@ -15,7 +15,7 @@
     #
     def self.search(search)
       if search
-        Expense.joins(:user).joins(:daily_invoice).where('users.name LIKE ? OR daily_invoices.restaurant_name LIKE ? OR type LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%")
+        Expense.joins(:user).joins(:daily_invoice).where('users.name LIKE ? OR expenses.date LIKE ? OR daily_invoices.restaurant_name LIKE ? OR type LIKE ?', "%#{search}%", "%#{Date.parse("%#{search}%", '%MM-%DD-%YYYY')}%", "%#{search}%", "%#{search}%")
       else
         Expense.all
       end

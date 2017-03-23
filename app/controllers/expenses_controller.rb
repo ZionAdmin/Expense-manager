@@ -33,16 +33,15 @@ class ExpensesController < ApplicationController
   def create
     @dailyinvoice = DailyInvoice.new(daily_invoice_params)
     @dailyinvoice.save
+    date_array = params[:daily_invoice][:expense][:date].split(',')
     user_ids = params[:daily_invoice][:expense][:user_ids]
-    type = params[:daily_invoice][:expense][:type]
-    had_lunch = params[:daily_invoice][:expense][:had_lunch]
-    unless user_ids.nil?
-      user_ids.each do |user_id|
-        @expense = Expense.new(daily_invoice_id: @dailyinvoice.id, date: @dailyinvoice.date, had_lunch: had_lunch, type: type)
-        @expense.user_id = user_id
-        @expense.save
+      date_array.each do |date|
+        user_ids.each do |user_id|
+          @expense = Expense.new(daily_invoice_id: @dailyinvoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
+          @expense.user_id = user_id
+          @expense.save
+        end
       end
-    end
     if @expense.save
       redirect_to expenses_url
     else
@@ -58,11 +57,11 @@ class ExpensesController < ApplicationController
     @dailyinvoice.destroy
     @dailyinvoice = DailyInvoice.new(daily_invoice_params)
     @dailyinvoice.save
-    type = params[:daily_invoice][:expense][:type]
-    had_lunch = params[:daily_invoice][:expense][:had_lunch]
-    unless user_ids.nil?
+    date_array = params[:daily_invoice][:expense][:date].split(',')
+    user_ids = params[:daily_invoice][:expense][:user_ids]
+    date_array.each do |date|
       user_ids.each do |user_id|
-        @expense = Expense.new(daily_invoice_id: @dailyinvoice.id, date: @dailyinvoice.date, had_lunch: had_lunch, type: type)
+        @expense = Expense.new(daily_invoice_id: @dailyinvoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
         @expense.user_id = user_id
         @expense.save
       end
