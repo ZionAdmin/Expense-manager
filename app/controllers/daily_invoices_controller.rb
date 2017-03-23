@@ -49,7 +49,7 @@
         end
       end
       @total_amount = []
-      total_amount_calculation = LunchDetail.where("lunch_details.date =? AND had_lunch = ?",@vardate,true)
+      total_amount_calculation = Expense.where("expenses.date =? AND had_lunch = ?",@vardate,true)
       total_amount_calculation.each do |lunch_detail|
         @total_amount << lunch_detail.user.cost_of_meal
       end

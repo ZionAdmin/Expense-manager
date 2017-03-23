@@ -51,8 +51,6 @@ gem 'jbuilder', '~> 2.5'
 # Allow use of Database Views
 gem "paranoia"
 
-gem 'pry-byebug'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

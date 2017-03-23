@@ -98,7 +98,7 @@
             </tr>
             </thead>
             <tbody>
-            <% lunch_details = LunchDetail.where("lunch_details.date =?",@vardate) %>
+            <% lunch_details = Expense.where("expenses.date =?",@vardate) %>
             <% lunch_details.each do |lunch_detail| %>
                 <tr>
                   <td>
