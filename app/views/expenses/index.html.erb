@@ -10,14 +10,19 @@
               <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>
           </h4>
         </div>
-        <div class="panel-body">
-          <div id="demo" class="collapse panel-collapse">
+
+          <div id="demo" class="panel-body collapse panel-collapse">
             <%= form_tag(expenses_path, :method => "get", id: "search-form") do %>
                 <div class="col-xs-12">
                   <label for="male">Names:</label>
                   <% User.all.each do |c| %>
+                      <% @user_checked = params[:user_ids] %>
                       <div class="checkbox-inline">
-                        <%= check_box_tag "user_ids[]", c.id %>
+                        <% if params[:user_ids].present? && (params[:user_ids].include? c.id.to_s) %>
+                            <%= check_box_tag "user_ids[]", c.id, @user_checked %>
+                        <% else %>
+                            <%= check_box_tag "user_ids[]", c.id %>
+                        <% end %>
                         <%= c.name %>
                       </div>
                   <% end %>
@@ -25,8 +30,13 @@
                 <div class="col-xs-12">
                   <label for="type">Types:</label>
                   <% Expense::EXPENSE_TYPES.each do |type| %>
+                      <% @expense_checked = params[:type_ids] %>
                       <div class="checkbox-inline">
-                        <%= check_box_tag "type_ids[]", type %>
+                        <% if params[:type_ids].present? && (params[:type_ids].include? type.to_s) %>
+                            <%= check_box_tag "type_ids[]", type, @expense_checked %>
+                        <% else %>
+                            <%= check_box_tag "type_ids[]", type %>
+                        <% end %>
                         <%= type %>
                       </div>
                   <% end %>
@@ -39,11 +49,10 @@
                   <%= submit_tag "Apply", name: nil, class: "btn btn-success btn-cons" %>
                   <%= link_to 'Cancel', expenses_path, class: "btn btn-danger btn-cons" %>
                 </div>
-                </div>
             <% end %>
             </div>
-        </div>
       </div>
+    </div>
     <div class="panel-group">
       <div class="panel panel-default">
         <div class="panel-body">
@@ -59,40 +68,38 @@
           <div class="clearfix"></div>
           <p></p>
 
-              <table class="table table-bordered">
-                <% if @expenses.present? %>
-                <thead>
+          <table class="table table-bordered">
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>Name</th>
+              <th>Had Meal</th>
+              <th>Restaurant Name</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Download</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @expenses.each do |expense| %>
                 <tr>
-                  <th>Date</th>
-                  <th>Name</th>
-                  <th>Had Meal</th>
-                  <th>Restaurant Name</th>
-                  <th>Amount</th>
-                  <th>Type</th>
-                  <th>Download</th>
-                  <th>Action</th>
+                  <td><%= expense.date.strftime("%b %e, %Y") %> </td>
+                  <td><%= link_to "#{expense.user.name}", edit_expense_path(expense.daily_invoice) %> </td>
+                  <td><%= expense.had_lunch? ? 'Yes' : 'No' %></td>
+                  <td><%= expense.daily_invoice.restaurant_name %></td>
+                  <td><%= expense.daily_invoice.amount %></td>
+                  <td><%= expense.type %></td>
+                  <td><%= link_to "ViewBill", expense.daily_invoice.image.url, download: "ViewBill" %></td>
+                  <td><%= link_to 'Edit', edit_expense_path(expense.daily_invoice) %> |
+                    <%= link_to 'Destroy', expense_path(expense.daily_invoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
                 </tr>
-                </thead>
-                <tbody>
-                <% @expenses.each do |expense| %>
-                    <tr>
-                    <td><%= expense.date.strftime("%b %e, %Y") %> </td>
-                    <td><%= link_to "#{expense.user.name}", edit_expense_path(expense.daily_invoice) %> </td>
-                    <td><%= expense.had_lunch? ? 'Yes' : 'No' %></td>
-                    <td><%= expense.daily_invoice.restaurant_name %></td>
-                    <td><%= expense.daily_invoice.amount %></td>
-                    <td><%= expense.type %></td>
-                    <td><%= link_to "ViewBill", expense.daily_invoice.image.url, download: "ViewBill" %></td>
-                    <td><%= link_to 'Edit', edit_expense_path(expense.daily_invoice) %> |
-                      <%= link_to 'Destroy', expense_path(expense.daily_invoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
-                    </tr>
-                <% end %>
-                <% else %>
-                    <p class="text-center"> No results found</p>
-                <% end %>
-                </tbody>
-              </table>
-
+            <% end %>
+            </tbody>
+          </table>
+          <% if @expenses.blank? %>
+              <p class="text-center"> No results found</p>
+          <% end %>
           <div class="text-center"><%= will_paginate @expenses, renderer: BootstrapPagination::Rails %></div>
         </div>
       </div>
