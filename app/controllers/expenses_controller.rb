@@ -4,7 +4,7 @@ class ExpensesController < ApplicationController
   # index
   #
   def index
-    @expenses = Expense.paginate(:page => params[:page], :per_page => 15).order("created_at DESC")
+    @expenses = Expense.paginate(:page => params[:page], :per_page => 15)
     @expenses = @expenses.joins(:user).user(params[:user_ids]) if params[:user_ids].present?
     @expenses = @expenses.expense_types(params[:type_ids]) if params[:type_ids].present?
     @expenses = @expenses.where('date LIKE ?', Date.parse("%#{params[:date]}%", '%MM-%DD-%YYYY')) if params[:date].present?
@@ -25,6 +25,14 @@ class ExpensesController < ApplicationController
   def edit
     @dailyinvoice = DailyInvoice.find(params[:id])
     @dailyinvoice.expenses.build
+  end
+
+  #
+  # show
+  #
+  def show
+    @expense = Expense.find(params[:id])
+    # @dailyinvoice.expenses
   end
 
   #
