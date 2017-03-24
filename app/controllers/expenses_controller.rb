@@ -7,4 +7,5 @@ class ExpensesController < ApplicationController
     @expenses = Expense.all
   end
 
+
 end

@@ -98,21 +98,21 @@
             </tr>
             </thead>
             <tbody>
-            <% lunch_details = LunchDetail.where("lunch_details.date =?",@vardate) %>
-            <% lunch_details.each do |lunch_detail| %>
+            <% expenses_details = Expense.where("expenses.date =?",@vardate) %>
+            <% expenses_details.each do |expense_detail| %>
                 <tr>
                   <td>
-                    <%= lunch_detail.user.name  %>
+                    <%= expense_detail.user.name  %>
                   </td>
                   <td>
-                    <%= lunch_detail.had_lunch %>
+                    <%= expense_detail.had_lunch %>
                   </td>
                   <td>
-                    <%= lunch_detail.user.cost_of_meal %>
+                    <%= expense_detail.user.cost_of_meal %>
                   </td>
                   <td>
-                    <% if lunch_detail.had_lunch == true %>
-                        <%= lunch_detail.user.cost_of_meal %>
+                    <% if expense_detail.had_lunch == true %>
+                        <%= expense_detail.user.cost_of_meal %>
                           <% else %>
                           <%= 0 %>
                     <% end %>

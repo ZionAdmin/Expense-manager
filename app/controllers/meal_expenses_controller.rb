@@ -1,5 +1,8 @@
 class MealExpensesController < ApplicationController
-
+def index
+  @from_date=params[:from_date]
+  @to_date=params[:to_date]
+end
   #
   # new
   #
@@ -14,6 +17,20 @@ class MealExpensesController < ApplicationController
   def edit
     @dailyinvoice = DailyInvoice.find(params[:id])
     @dailyinvoice.expenses.build
+  end
+
+  # def month_details
+  #   @from_date=params[:from_date]
+  #   @to_date=params[:to_date]
+  # end
+
+  def export
+    users=User.all
+    results = MealExpense.get_date_details params
+
+    respond_to do |format|
+      format.csv  { send_data  results, filename:"lunch_detail.csv"}
+    end
   end
 
   # def create

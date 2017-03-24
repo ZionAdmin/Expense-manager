@@ -5,3 +5,4 @@
     validate :user_id
 
   end
+

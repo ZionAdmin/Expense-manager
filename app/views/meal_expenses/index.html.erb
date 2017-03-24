@@ -1,31 +1,40 @@
-	<h1>Lunch Details</h1>
-  <p>
-    <%= link_to 'Meal Register', new_daily_invoice_path, :class => "btn btn-primary"%>
-  </p>
-	<table class="table table-bordered">
-	 <thead>
-		<tr>
-		<th>User Name</th>
-		<th>Date</th>
-		<th>Had Meal</th>
-    <th>Action</th>
-		</tr>
-	</thead>
-   <tbody>
-		<% @lunchdetails.each do |lunchdetail| %>
-		<% begin %>
-		<tr>
-      <td> <%= link_to "#{lunchdetail.user.name}", edit_lunch_detail_path(lunchdetail) %> </td>
-			<td> <%= lunchdetail.date.strftime("%b %e, %Y")%> </td>
-			<td> <%= lunchdetail.had_lunch? ? 'Yes' : 'No' %></td>
-			<td> <%= link_to 'Destroy', lunch_detail_path(lunchdetail),:method => :delete , :data => { :confirm => 'Are you sure?' } %></td>
-		</tr>
-	    <% rescue Exception => e
-           puts "user doesnot exists"
-        end%>
+<div class="panel panel-danger">
+  <div class="panel-heading">MealExpenseDetails</div>
+  <div class="panel-body">
+    <%= form_tag(meal_expenses_path(:format=> :csv), method: :get) do %>
 
-	<% end %>
-	</tbody>		
-	</table>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-3" >
+              <p>
+                From_Date
+                <%= text_field_tag 'from_date', nil %>
+              </p>
+            </div>
+            <div class="col-sm-3" >
+              <p>
+                To_Date
+                <%= text_field_tag 'to_date', nil %>
 
-	
+              </p>
+            </div>
+            <div class="col-sm-3" >
+              <p>
+                <%= submit_tag("Submit") %>
+
+              </p>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#from_date").datepicker({dateFormat: "yy-mm-dd"});
+        $("#to_date").datepicker({dateFormat: "yy-mm-dd"});
+    });
+</script>
