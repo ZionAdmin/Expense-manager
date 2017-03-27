@@ -1,4 +1,4 @@
-class MealExpensesController < ApplicationController
+class MealsExpensesController < ApplicationController
 
 def index
   @from_date=params[:from_date]
@@ -24,7 +24,7 @@ end
 
   def export
     users=User.all
-    results = MealExpense.get_date_details params
+    results = MealsExpense.get_date_details params
 
     respond_to do |format|
       format.csv  { send_data  results, filename:"lunch_detail.csv"}

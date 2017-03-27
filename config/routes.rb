@@ -2,7 +2,11 @@
      root "daily_invoices#index"
      resources :users
      resources :expenses
-     resources :meals_expenses, controller: "expenses", type: "MealsExpense"
+     resources :meals_expenses, controller: "meals_expenses", type: "MealsExpense" do
+       collection do
+         get "export"
+       end
+     end
      resources :fruits_expenses, controller: "expenses", type: "FruitsExpense"
      resources :snaks_expenses, controller: "expenses", type: "SnaksExpense"
      resources :daily_invoices
