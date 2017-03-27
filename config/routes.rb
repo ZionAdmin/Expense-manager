@@ -8,8 +8,9 @@
      resources :daily_invoices
      match "daily_details" => "daily_invoices#daily_details", :as => :daily_details, :via => [:get, :post]
      match "/"=> "expense_manager#dashboard",:via => [:get, :post]
-     match "month_details" => "users#month_details",  :via => [:get, :post]
+     match "user_month_details" => "users#user_month_details",  :via => [:get, :post]
      match "month_info" => "users#month_info", :via => [:get, :post]
+
      resources :user_payments
      resources :payment_modes
      resources :bootstraps
