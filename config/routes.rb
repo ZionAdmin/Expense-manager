@@ -1,5 +1,5 @@
   Rails.application.routes.draw do
-     root "expenses#index"
+     root "daily_invoices#index"
      resources :users
      resources :expenses
      resources :meals_expenses, controller: "expenses", type: "MealsExpense"
