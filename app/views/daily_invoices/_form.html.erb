@@ -1,8 +1,8 @@
-<% if @dailyinvoice.errors.any? %>
+<% if @daily_invoice.errors.any? %>
     <div id="error_explaination">
-      <h2><%= pluralize(@dailyinvoice.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(@daily_invoice.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
-        <% @dailyinvoice.errors.full_messages.each do |message| %>
+        <% @daily_invoice.errors.full_messages.each do |message| %>
             <li><%= message %>
             </li>
         <% end %>
@@ -13,17 +13,18 @@
 <div class="col-sm-6">
   <div class="form-group">
     <%= f.label :Restaurant_Name %>
-    <%= f.text_field :restaurant_name, class: 'form-control' %>
+    <%= f.text_field :restaurant_name, class: 'form-control', required: true %>
   </div>
+  <div class="help-block with-errors"></div>
   <div class="form-group">
     <%= f.label :Amount %>
-    <%= f.text_field :amount, class: 'form-control' %>
+    <%= f.text_field :amount, class: 'form-control', required: true%>
   </div>
   <div class="form-group">
     <div class="row">
       <div class="col-sm-5">
-        <%= f.label :Date %>
-        <%= f.text_field :date, class: 'form-control date' %>
+        <%= f.label :Bill_Date %>
+        <%= f.text_field :date, class: 'form-control bill_date' %>
       </div>
     </div>
   </div>
@@ -36,7 +37,6 @@
 <%= f.fields_for :expense do |l| %>
     <div class="col-sm-6">
       <%= l.hidden_field :daily_invoice_id %>
-      <%= l.hidden_field :date %>
       <div class="form-group">
         <%= l.label :Users %></br>
         <% User.all.each do |c| %>
@@ -45,6 +45,14 @@
               <%= label_tag "daily_invoice[expense][user_ids][][#{c.id}]", c.name %>
             </div>
         <% end %>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-5">
+            <%= l.label :Date %>
+            <%= l.text_field :date, class: 'form-control date', required: true%>
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <%= l.label :Had_Lunch %>
@@ -61,12 +69,13 @@
     </div>
     <div class="form-group text-center">
       <%= button_tag "Save", class: "btn btn-success btn-cons" %></button>
-      <%= link_to 'Cancel', expenses_path, class: "btn btn-danger btn-cons" %>
+      <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
     </div>
 <% end %>
 <!--Expense Details ends-->
 <script type="text/javascript">
   $(document).ready(function () {
-    $(".date").datepicker({dateFormat: "yy-mm-dd"});
+    $(".bill_date").datepicker({dateFormat: "yy-mm-dd"});
+    $(".date").multiDatesPicker();
   });
 </script>

@@ -6,8 +6,7 @@
     acts_as_paranoid
     default_scope { where(deleted_at: nil) }
     EXPENSE_TYPES = ["MealsExpense", "FruitsExpense", "SnaksExpense"]
-    scope :user, -> (users) { where(user_id: users) }
-    scope :expense_types, -> (types) { where(type: types) }
+
 
 
     #
@@ -21,3 +20,4 @@
       end
     end
   end
+

@@ -8,4 +8,5 @@
     validates_attachment :image, :content_type => { :content_type => ["image/jpeg","image/jpg","image/gif","image/png","image/pdf"] }
     accepts_nested_attributes_for :expenses
     acts_as_paranoid
+
   end
