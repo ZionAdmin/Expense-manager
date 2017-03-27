@@ -1,4 +1,5 @@
 class MealExpensesController < ApplicationController
+
 def index
   @from_date=params[:from_date]
   @to_date=params[:to_date]
@@ -19,10 +20,7 @@ end
     @dailyinvoice.expenses.build
   end
 
-  # def month_details
-  #   @from_date=params[:from_date]
-  #   @to_date=params[:to_date]
-  # end
+
 
   def export
     users=User.all

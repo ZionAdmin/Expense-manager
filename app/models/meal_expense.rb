@@ -1,4 +1,5 @@
 class MealExpense < Expense
+
   def self.get_date_details params
     users=User.all
     meal_expenses=MealExpense.all
@@ -15,6 +16,7 @@ class MealExpense < Expense
     total_array=['', '']
     results = []
     totalamount=0
+
     (a..b).each do |i|
       weekamount=0
 
@@ -38,14 +40,14 @@ class MealExpense < Expense
         end
         @date_detail << @vardate.to_date << @amount
 
-        users.each do |user|
+        users.order(:name).each do |user|
           weekamount=0
           user.id
           @amount = DailyInvoice.where("daily_invoices.date = ? ", @vardate).pluck(:amount)
           if @amount.empty?
             @amount = 0
           end
-          @had_lunch = MealExpense.where("meal_expenses.date = ? AND meal_expenses.user_id = ? ", @vardate, user.id).pluck(:had_lunch)
+          @had_lunch = Expense.where("date = ? AND user_id = ? ", @vardate, user.id).pluck(:had_lunch)
           if @had_lunch.empty?
             @had_lunch = 0
           else
@@ -55,11 +57,12 @@ class MealExpense < Expense
           end
           @date_detail << @had_lunch
         end
+
+        puts"calculation===>#{calculation.inspect}"
         results << @date_detail
 
       end
-
-      results << week_array
+      #results << week_array
 
       (calculation).each do |key, value|
         (value).each do |key1, value1|
@@ -68,25 +71,15 @@ class MealExpense < Expense
           puts "week amount is #{week_array}"
           total_array=totalamount+value1
           total_array << totalamount
-          puts "total amount is #{total_amount}"
+          puts "total amount is #{totalamount}"
         end
       end
+      results << week_array
     end
 
     puts "results is #{results.inspect}"
 
     users = User.order(:name)
-    file_name =meal_expense
-
-    #file_name = lunch_details
-    dirname = Rails.root.join("tmp")
-    FileUtils.mkdir_p(dirname)
-    attachment_path = "#{dirname}/#{file_name}.csv"
-
-
-
-
-
 
     headers = ["Date", "Amount"]
 
@@ -107,7 +100,5 @@ class MealExpense < Expense
     end
 
   end
-
-
 
 end
