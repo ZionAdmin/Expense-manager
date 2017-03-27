@@ -11,6 +11,9 @@ class MealsExpense < Expense
     a=Date.parse(@from_date).cweek
     b=Date.parse(@to_date).cweek
 
+    calculation = {}
+    week_array = ['','']
+    total_array=['','']
     results = []
 
     (a..b).each do |i|
@@ -47,11 +50,30 @@ class MealsExpense < Expense
             @had_lunch = 0
           else
             @had_lunch = 1
+            calculation[user.id] ||= {}
+            calculation[user.id][:week_amount] = user.cost_of_meal
 
           end
           @date_detail << @had_lunch
         end
         results << @date_detail
+      end
+      results << week_array
+
+
+      (calculation).each do |key,value|
+        (value).each do |key1,value1|
+
+
+         # week_array << value1
+
+
+          puts "week amount is #{week_array}"
+
+          # total_array=totalamount+value1
+          # total_array << totalamount
+          # puts "total amount is #{total_amount}"
+        end
       end
     end
 
