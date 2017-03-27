@@ -1,5 +1,5 @@
-  <div class="panel panel-danger">
-    <div class="panel-heading">MonthDetails</div>
+  <div class="panel panel-info">
+    <div class="panel-heading">UserMonthDetails</div>
     <div class="panel-body">
   <%= form_tag(month_info_path method: :post) do %>
           <div class="container-fluid">
@@ -13,7 +13,7 @@
 
               <div class="col-sm-3" >
                 <p>
-                User
+                Users
             <%=select_tag 'user_id', options_for_select(@users.collect{ |u| [u.name, u.id] })%>
              </p>
               </div>
