@@ -74,7 +74,7 @@
                 <td><%= link_to dailyinvoice.date.strftime("%d-%m-%Y"), daily_invoice_path(dailyinvoice) %> </td>
                 <td><%= dailyinvoice.restaurant_name %></td>
                 <td><%= dailyinvoice.amount %></td>
-                <td><%= dailyinvoice.expenses.first.type %></td>
+                <td><%= dailyinvoice.expenses.first.type rescue nil%></td>
                 <td><%= link_to "ViewBill", dailyinvoice.image.url, download: "ViewBill" %></td>
                 <td><%= link_to 'Show', daily_invoice_path(dailyinvoice) %> | <%#= link_to 'Edit', edit_daily_invoice_path(dailyinvoice) %> |
                   <%= link_to 'Destroy', daily_invoice_path(dailyinvoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>

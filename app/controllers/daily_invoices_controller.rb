@@ -1,5 +1,5 @@
   class DailyInvoicesController < ApplicationController
-
+    require 'date'
     #
     # index
     #
@@ -45,9 +45,10 @@
       @daily_invoice.save
       date_array = params[:daily_invoice][:expense][:date].split(',')
       user_ids = params[:daily_invoice][:expense][:user_ids]
-      date_array.each do |date|
+      date_array.each do |d|
+        date = Time.strptime(d, "%m/%d/%Y").strftime('%Y-%m-%d')
         user_ids.each do |user_id|
-          @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
+          @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date , had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
           @expense.user_id = user_id
           @expense.save
         end
@@ -68,12 +69,12 @@
       date_array = params[:daily_invoice][:expense][:date].split(',')
       user_ids = params[:daily_invoice][:expense][:user_ids]
       puts user_ids
-      date_array.each do |date|
+      date_array.each do |d|
         user_ids.each do |user_id|
-          # debugger
+          date = Time.strptime(d, "%m/%d/%Y").strftime('%Y-%m-%d')
           @expense = Expense.where(daily_invoice_id: params[:id])
           @expense = @expense.update(daily_invoice_id: params[:id], date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
-          # @expense.user_id = user_id
+          @expense.update :user_id=>user_id
         end
       end
         redirect_to daily_invoices_path
