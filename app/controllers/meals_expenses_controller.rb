@@ -28,9 +28,7 @@ class MealsExpensesController < ApplicationController
   # export
   #
   def export
-    users=User.all
     results = MealsExpense.get_date_details params
-
     respond_to do |format|
       format.csv { send_data results, filename: "lunch_detail_#{Time.now.to_i}.csv" }
     end
