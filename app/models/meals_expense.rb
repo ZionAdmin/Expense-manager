@@ -15,20 +15,16 @@ class MealsExpense < Expense
     to_date = Date.parse(@to_date).cweek
 
     results = []
-    # first_balance = ['',''] + Array.new(User.count, 0)
 
     #HARD CODED VALUE FOR BALANCE FOR EACH USER
     balances = Array.new(User.count + 2, 0)
     user_balances = {}
 
     (from_date..to_date).each_with_index do |week_num, week_num_index|
-      puts "week_num===================#{week_num}"
-      puts "week_num_index===================#{week_num_index}"
 
       date_array = []
       (1..7).each do |day|
         date_array << Date.commercial(year, week_num, day).to_date
-        puts "11111#{date_array.inspect}"
       end
 
       user_amt_hash = {}
@@ -99,7 +95,6 @@ class MealsExpense < Expense
     CSV.generate(headers: true) do |csv|
       csv << headers
       csv << costofmeal
-      # csv << first_balance
       results.each do |result|
         csv << result
       end
