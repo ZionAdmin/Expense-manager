@@ -11,21 +11,23 @@ class MealsExpense < Expense
     @to_date = params[:to_date]
 
     year = @from_date.split("-").first.to_i
-    a = Date.parse(@from_date).cweek
-    b = Date.parse(@to_date).cweek
+    from_date = Date.parse(@from_date).cweek
+    to_date = Date.parse(@to_date).cweek
 
     results = []
-    first_balance = ['',''] + Array.new(User.count, 0)
+    # first_balance = ['',''] + Array.new(User.count, 0)
 
     #HARD CODED VALUE FOR BALANCE FOR EACH USER
     balances = Array.new(User.count + 2, 0)
     user_balances = {}
 
-    (a..b).each_with_index do |i, k|
+    (from_date..to_date).each_with_index do |week_num, week_num_index|
+      puts "week_num===================#{week_num}"
+      puts "week_num_index===================#{week_num_index}"
 
       date_array = []
       (1..7).each do |day|
-        date_array << Date.commercial(year, i, day).to_date
+        date_array << Date.commercial(year, week_num, day).to_date
         puts "11111#{date_array.inspect}"
       end
 
@@ -77,9 +79,10 @@ class MealsExpense < Expense
       results << ['', ''] + weekly_costs
 
       #balance amount calculation for each user for all weeks
-      user_balances[k] = []
-      weekly_costs.each_with_index { |j, i| user_balances[k] << (k==0 ? (balances[i] + weekly_costs[i]) : (user_balances[k-1][i] + weekly_costs[i])) }
-      results << ['', ''] + user_balances[k]
+      user_balances[week_num_index] = []
+      weekly_costs.each_with_index { |value, index|
+      user_balances[week_num_index] << (week_num_index==0 ? (balances[index] + weekly_costs[index]) : (user_balances[week_num_index-1][index] + weekly_costs[index])) }
+      results << ['', ''] + user_balances[week_num_index]
 
     end
 
@@ -96,7 +99,7 @@ class MealsExpense < Expense
     CSV.generate(headers: true) do |csv|
       csv << headers
       csv << costofmeal
-      csv << first_balance
+      # csv << first_balance
       results.each do |result|
         csv << result
       end
