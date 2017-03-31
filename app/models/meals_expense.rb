@@ -21,14 +21,11 @@ class MealsExpense < Expense
     balances = Array.new(User.count + 2, 0)
     user_balances = {}
 
-    (from_date..to_date).each_with_index do |week_num, week_num_index|
-      puts "week_num===================#{week_num}"
-      puts "week_num_index===================#{week_num_index}"
+    (from_date..to_date).each_with_index do |week_num, week_num_index|     
 
       date_array = []
       (1..7).each do |day|
-        date_array << Date.commercial(year, week_num, day).to_date
-        puts "11111#{date_array.inspect}"
+        date_array << Date.commercial(year, week_num, day).to_date       
       end
 
       user_amt_hash = {}
@@ -81,7 +78,7 @@ class MealsExpense < Expense
       #balance amount calculation for each user for all weeks
       user_balances[week_num_index] = []
       weekly_costs.each_with_index { |value, index|
-      user_balances[week_num_index] << (week_num_index==0 ? (balances[index] + weekly_costs[index]) : (user_balances[week_num_index-1][index] + weekly_costs[index])) }
+      user_balances[week_num_index] << (week_num_index == 0 ? (balances[index] + weekly_costs[index]) : (user_balances[week_num_index-1][index] + weekly_costs[index])) }
       results << ['', ''] + user_balances[week_num_index]
 
     end
