@@ -5,7 +5,7 @@
     validates_presence_of :amount
     validates_presence_of :date
     has_attached_file :image
-    validates_attachment :image, :content_type => { :content_type => ["image/jpeg","image/jpg","image/gif","image/png","image/pdf"] }
+    do_not_validate_attachment_file_type :image
     accepts_nested_attributes_for :expenses
     acts_as_paranoid
 
