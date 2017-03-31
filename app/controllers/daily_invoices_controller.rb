@@ -4,9 +4,9 @@
     # index
     #
     def index
-      @daily_invoices = DailyInvoice.paginate(:page => params[:page], :per_page => 15)
-      @daily_invoices = @daily_invoices.joins(:expenses).where('expenses.type = ?', params[:type_ids]).uniq if params[:type_ids].present?
+      @daily_invoices = DailyInvoice.joins(:expenses).where('expenses.type IN (?)', params[:type_ids]).uniq if params[:type_ids].present?
       @daily_invoices = @daily_invoices.where('date LIKE ?', Date.parse("%#{params[:date]}%", '%MM-%DD-%YYYY')) if params[:date].present?
+      @daily_invoices = @daily_invoices.nil?? DailyInvoice.paginate(:page => params[:page], :per_page => 15) : @daily_invoices.paginate(:page => params[:page], :per_page => 15)
     end
 
     #
@@ -92,7 +92,6 @@
       redirect_to daily_invoices_url
     end
 
-    #
     # daily_details
     #
     def daily_details
@@ -115,9 +114,10 @@
       end
       @total_amount = @total_amount.sum
     end
+
     private
     def daily_invoice_params
-      params.require(:daily_invoice).permit(:restaurant_name, :amount, :date, :image, :price, expenses_attributes: [:id, :daily_invoice_id, :date, :had_lunch, :type, user_id: []])
+      params.require(:daily_invoice).permit(:restaurant_name, :amount, :date, :image, expenses_attributes: [:id, :daily_invoice_id, :date, :had_lunch, :type, user_id: []])
     end
   end
 
