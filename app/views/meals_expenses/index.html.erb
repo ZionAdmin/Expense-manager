@@ -1,4 +1,5 @@
-<div class="panel panel-info">
+<div class="col-md-10 col-md-offset-1">
+  <div class="panel panel-info">
   <div class="panel-heading">MealExpenseDetails</div>
   <div class="panel-body">
     <%= form_tag(export_meals_expenses_path(:format=> :csv), method: :get) do %>
@@ -24,8 +25,7 @@
     <% end %>
   </div>
 </div>
-
-
+</div>
 
 <script type="text/javascript">
     $(document).ready(function() {

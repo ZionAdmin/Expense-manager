@@ -6,7 +6,7 @@
     def index
       @daily_invoices = DailyInvoice.paginate(:page => params[:page], :per_page => 15)
       @daily_invoices = @daily_invoices.joins(:expenses).where('expenses.type = ?', params[:type_ids]).uniq if params[:type_ids].present?
-      @daily_invoices = @daily_invoices.where('date LIKE ?', Date.parse("%#{params[:date]}%", '%MM-%DD-%YYYY')) if params[:date].present?
+      @daily_invoices = @daily_invoices.where('daily_invoices.date LIKE ?', Date.parse("%#{params[:date]}%", '%MM-%DD-%YYYY')) if params[:date].present?
     end
 
     #
@@ -33,7 +33,7 @@
       @expense_array = Expense.where(daily_invoice_id: @daily_invoice.id)
       user_array = @expense_array.collect {|users| users.user.name}.uniq
       @users = user_array.join(", ")
-      date_array = @expense_array.collect {|dates| dates.date}.uniq
+      date_array = @expense_array.collect {|dates| dates.date.strftime("%d-%m-%Y")}.uniq
       @dates = date_array.join(", ")
     end
 
@@ -114,7 +114,7 @@
     end
     private
     def daily_invoice_params
-      params.require(:daily_invoice).permit(:restaurant_name, :amount, :date, :image, :price, expenses_attributes: [:id, :daily_invoice_id, :date, :had_lunch, :type, user_id: []])
+      params.require(:daily_invoice).permit(:restaurant_name, :amount, :date, :image, :price, expense_attributes: [:id, :daily_invoice_id, :date, :had_lunch, :type, user_id: []])
     end
   end
 
