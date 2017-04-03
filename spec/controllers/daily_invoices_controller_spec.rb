@@ -11,8 +11,8 @@ RSpec.describe DailyInvoicesController, type: :controller do
       @test_expenses.save
       puts @test_daily_invoice.inspect
     end
-    describe "with valid params" do
 
+    describe "with valid params" do
     it "will load the index page" do
       if (@test_daily_invoice == @test_expenses)
       get :index, daily_invoice_id: @test_daily_invoice.id ,expense_id: @test_expenses.id
@@ -68,41 +68,44 @@ RSpec.describe DailyInvoicesController, type: :controller do
   describe "POST #DailyInvoice" do
 
     before do
-      @daily_invoice=DailyInvoice.create(restaurant_name: "Adigas", amount: "500", date: "2017-3-30")
+      @expense = MealsExpense.create(daily_invoice_id: @daily_invoice.id,date: "2017-3-30",had_lunch:"true",user_id: @user.id)
+      @daily_invoice=DailyInvoice.create(restaurant_name: "Adigas", amount: "500", date: "2017-3-30",expense_attribute:[id:@expense.id, daily_invoice_id:@daily_invoice.id, date:"2017-3-30", had_lunch:"true", type:"MealExpense", user_id:@user.id ])
       @user=User.create(name:"navya",email: "navya@gmail.com",cost_of_meal: 65)
-      #@expense = MealsExpense.create(daily_invoice_id: @daily_invoice.id,date: "2017-3-30",had_lunch:"true",user_id: @user.id)
+
     end
+
     context "When saved succesfully." do
     it "should redirect dailyinvoice_path and expenses_path" do
       #post :create,daily_invoice: {restaurant_name: "Adigas", amount: "500", date: "2017-3-30",image: ""}
-      post :create,expense: {daily_invoice_id: @daily_invoice.id, date: "2017-3-30", had_lunch: "true", user_id: @user.id}
+      post :create, daily_invoice: {id:@daily_invoice.id,restaurant_name: "Adigas", amount: "500", date: "2017-3-30",expense_attribute:[id:@expense.id, daily_invoice_id:@daily_invoice.id, date:"2017-3-30", had_lunch:"true", type:"MealExpense", user_id:@user.id]}
+      #post :create,expense: {daily_invoice_id: @daily_invoice.id, date: "2017-3-30", had_lunch: "true", user_id: @user.id}
       expect(response.content_type).to eq "text/html"
       expect(response).to redirect_to daily_invoices_path
+      #expect(response).to render_template(:@daily_invoice)
     end
     end
   end
-    # context "POST #DailyInvoice and Expenses." do
-    #   it "should render to new page" do
-    #     post :create,id: nil
-    #
-    #     expect(response.content_type).to eq "text/html"
-    #     expect(response).to render_template (:new)
-    #
-    #   end
-    # end
+
     describe '#DELETE destroy' do
       before do
         @daily_invoice = DailyInvoice.create(restaurant_name: "Adigas", amount: "500", date: "2017-3-30")
        @meal_expense= MealsExpense.create(daily_invoice_id: @daily_invoice.id,date: "2017-3-30",had_lunch:"true",user_id: 2)
       puts @meal_expense.inspect
       end
-      it 'deletes a dailyinvoice' do
 
+      it 'deletes a dailyinvoice' do
         delete :destroy,id: @daily_invoice.id
         expect(response.content_type).to eq "text/html"
-        #expect(@daily_invoice.deleted_at).not_to eq nil
-        #expect(DailyInvoice.count).to eq 0
         expect(response).to redirect_to daily_invoices_path
+        #expect(@daily_invoice.deleted_at).not_to eq nil
+        #expect(DailyInvoice.count).by(-1)
+        #expect(response.status).to eq 200
+
+        # it "redirects to dailyinvoice#index" do
+        #   delete :destroy, id: @daily_invoice.id
+        #   expect(response.content_type).to eq "text/html"
+        #   expect(response).to redirect_to daily_invoices_path
+        # end
       end
     end
 
@@ -115,8 +118,7 @@ RSpec.describe DailyInvoicesController, type: :controller do
     end
     context "when date param is present" do
       it "create a  valid record" do
-        xhr :post, :daily_details,:controller=>"daily_invoices", params:  {"date"=>"2017-03-14"}
-
+        xhr :post, :daily_details,:id => @daily_invoice.id ,controller=>"daily_invoices", params:  {"date"=>"2017-03-14"}
         expect(response.content_type).to eq "text/html"
         #expect(daily_details).to eq "daily_details"
         #expect(response).to redirect_to daily_details_path
