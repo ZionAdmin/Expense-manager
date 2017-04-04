@@ -6,10 +6,10 @@ RSpec.describe DailyInvoicesController, type: :controller do
 
     before do
       @test_daily_invoice=DailyInvoice.create( restaurant_name: "Adigas", amount: "500", date: "2017-3-30",image: "")
-      @test_expenses=Expense.create(id: 29,daily_invoice_id: @test_daily_invoice.id,date: "2017-3-30",had_lunch:"true",type: "MealsExpense",user_id: 2)
+      @test_expenses=Expense.create(daily_invoice_id: @test_daily_invoice.id,date: "2017-3-30",had_lunch:"true",type: "MealsExpense",user_id: 2)
       @test_daily_invoice.save
       @test_expenses.save
-      puts @test_daily_invoice.inspect
+      puts @test_expenses.inspect
     end
 
     describe "with valid params" do
@@ -41,6 +41,7 @@ RSpec.describe DailyInvoicesController, type: :controller do
       expect(response).to render_template(:new)
     end
   end
+
   describe "GET #edit" do
     it "should load the edit page" do
       daily_invoice=DailyInvoice.create(restaurant_name: "Adigas", amount: "500", date: "2017-3-30",image: "")
@@ -66,25 +67,31 @@ RSpec.describe DailyInvoicesController, type: :controller do
   end
 
   describe "POST #DailyInvoice" do
-
     before do
-      @expense = MealsExpense.create(daily_invoice_id: @daily_invoice.id,date: "2017-3-30",had_lunch:"true",user_id: @user.id)
-      @daily_invoice=DailyInvoice.create(restaurant_name: "Adigas", amount: "500", date: "2017-3-30",expense_attribute:[id:@expense.id, daily_invoice_id:@daily_invoice.id, date:"2017-3-30", had_lunch:"true", type:"MealExpense", user_id:@user.id ])
       @user=User.create(name:"navya",email: "navya@gmail.com",cost_of_meal: 65)
+      #@daily_invoice = DailyInvoice.create(restaurant_name:"Adigas",amount:500,date: "2017-3-30",image: fixture_file_upload('app/assets/images/index1.JPEG'))
 
+      # @daily_invoice=DailyInvoice.create(restaurant_name: "Adigas", amount: "500", date: "2017-3-30",image: fixture_file_upload('app/assets/images/index1.JPEG'))
+       @daily_invoice=DailyInvoice.create("restaurant_name" => "Adigas", "amount" => "500", "date" => "2017-3-30","image" => fixture_file_upload('app/assets/images/index1.JPEG'), :expenses => { daily_invoice_id: 22, :user_ids =>[2], date: "04/04/2017" , had_lunch: "true", type:"MealsExpense"})
+       @expense = Expense.create(date: "2017-3-30",had_lunch:"true",user_id: @user.id,daily_invoice_id:@daily_invoice.id)
+      puts @daily_invoice.inspect
     end
 
-    context "When saved succesfully." do
+
     it "should redirect dailyinvoice_path and expenses_path" do
+      post :create,expense: {date: "2017-3-30",had_lunch:"true",user_id: @user.id,daily_invoice_id:@daily_invoice.id}
       #post :create,daily_invoice: {restaurant_name: "Adigas", amount: "500", date: "2017-3-30",image: ""}
-      post :create, daily_invoice: {id:@daily_invoice.id,restaurant_name: "Adigas", amount: "500", date: "2017-3-30",expense_attribute:[id:@expense.id, daily_invoice_id:@daily_invoice.id, date:"2017-3-30", had_lunch:"true", type:"MealExpense", user_id:@user.id]}
-      #post :create,expense: {daily_invoice_id: @daily_invoice.id, date: "2017-3-30", had_lunch: "true", user_id: @user.id}
+
+      #post :create,daily_invoice: {restaurant_name: "Adigas", amount: "500", date: "2017-3-30","expense" => {date:"2017-3-30", had_lunch:"true", type:"MealsExpense", user_id:@user.id}}
+      #post :create,daily_invoice_id:@daily_invoice.id,expense: { date: "2017-3-30", had_lunch: "true",type:"MealsExpense",user_id: @user.id}
+
       expect(response.content_type).to eq "text/html"
       expect(response).to redirect_to daily_invoices_path
       #expect(response).to render_template(:@daily_invoice)
     end
     end
-  end
+
+
 
     describe '#DELETE destroy' do
       before do
