@@ -4,7 +4,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe "GET #index" do
     before do
-      @test_user=User.create( name: "p2", email: "p2@gmail.com", cost_of_meal: 60)
+      @test_user= User.create( name: "p2", email: "p2@gmail.com", cost_of_meal: 60)
       @test_user.save
       puts @test_user.inspect
     end
@@ -13,7 +13,7 @@ RSpec.describe UsersController, type: :controller do
       get :index
       expect(response.content_type).to eq "text/html"
       expect(response).to render_template(:index)
-      #expect(User.count).to eq 1
+      expect(User.count).to eq 3
     end
     end
 
@@ -32,8 +32,8 @@ RSpec.describe UsersController, type: :controller do
       expect(User.count).to eq 1
       expect(response).to redirect_to users_path
       #expect(response).to render_template (:create)
-
     end
+
   end
 
   describe "GET show" do
@@ -76,6 +76,23 @@ end
     end
   end
 
+  describe '#User_Month_info' do
+    it ' Display Users' do
+      user1 = User.create!( name: "p1", email: "p1@gmail.com", cost_of_meal: 50)
+      user2 = User.create!( name: "p2", email: "p2@gmail.com", cost_of_meal: 60)
+      get :user_month_details
+      expect(assigns[:users]).to eq [user1,user2]
+    end
+  end
+describe '#Moonth_info' do
+  it 'user information' do
+    @user = User.create!(name: "p1",email:"p1@gmail.com", cost_of_meal: 50)
+    @daily_invoice = DailyInvoice.create!(restaurant_name: "Adigas",amount:500,date:"2017-04-14",image: fixture_file_upload('app/assets/images/index1.JPEG'))
+    @expense = Expense.create!(had_lunch: true, user_id:@user.id,date:"2017-04-13",daily_invoice_id: @daily_invoice.id)
+    get :month_info, user_id: @user.id, date: "2017-04-13"
+    expect(assigns[:expensedetails]).to eq [@expense]
+  end
+end
 end
 
 

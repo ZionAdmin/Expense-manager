@@ -71,13 +71,12 @@ RSpec.describe DailyInvoicesController, type: :controller do
       @user=User.create(name:"navya",email: "navya@gmail.com",cost_of_meal: 65)
       puts @user.inspect
       @daily_invoice=DailyInvoice.new(:restaurant_name => 'Adigas', :amount => 500,:date => '2017-3-30',image: fixture_file_upload('app/assets/images/index1.JPEG'))
-
       @expense=Expense.new(:date =>"04/04/2017",:had_lunch =>"true",:user_id => @user.id,:daily_invoice_id => @daily_invoice.id,:type =>"MealsExpense")
 
       @daily_invoice.save
       @expense.save
-      puts @daily_invoice.inspect
-      puts @expense.inspect
+      # puts @daily_invoice.inspect
+       puts @expense.inspect
     end
 
     it "should redirect dailyinvoice_path and expenses_path" do
@@ -94,9 +93,15 @@ RSpec.describe DailyInvoicesController, type: :controller do
     end
 
   describe "put #update" do
-    it "update one dailyinvoice" do
+    before do
+      @user=User.create(name:"navya",email: "navya@gmail.com",cost_of_meal: 65)
+      puts @user.inspect
+      @daily_invoice=DailyInvoice.new(:restaurant_name => 'Adigas', :amount => 500,:date => '2017-3-30',image: fixture_file_upload('app/assets/images/index1.JPEG'))
+      @expense=Expense.new(:date =>"04/04/2017",:had_lunch =>"true",:user_id => @user.id,:daily_invoice_id => @daily_invoice.id,:type =>"MealsExpense")
+    end
+      it "update one dailyinvoice" do
       @daily_invoice=DailyInvoice.new(:restaurant_name => 'Adigas', :amount => 500,:date => '2017-3-30',image: fixture_file_upload('app/assets/images/index1.JPEG') )
-      put  :create, daily_invoice: {restaurant_name:  "Adigas", amount:  "500", date:  "2017-3-30",image: fixture_file_upload('app/assets/images/index1.JPEG'), :expense => {:user_ids =>[2], date: "04/04/2017" , had_lunch: "true", type:"MealsExpense"}}
+      put  :create,daily_invoice: {restaurant_name:  "Adigas", amount:  "500", date:  "2017-3-30",image: fixture_file_upload('app/assets/images/index1.JPEG'), :expense => {:user_ids =>[@user.id], date: "04/04/2017" , had_lunch: "true", type:"MealsExpense"}}
       expect(response.content_type).to eq "text/html"
       expect(response).to redirect_to daily_invoices_path
     end

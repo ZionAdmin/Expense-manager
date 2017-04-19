@@ -41,7 +41,7 @@ RSpec.describe UserPaymentsController, type: :controller do
           post :create,id: @test_user_payment.id,user_payment: { user_id: @test_user.id, amount_paid: 45, date: "2017-4-2", comment: "Good",payment_mode_id: @test_payment_mode.id}
           expect(response.content_type).to eq "text/html"
           expect(response).to redirect_to user_payments_path
-          #expect(response).to render (:new)
+
       end
   end
 
@@ -55,7 +55,7 @@ RSpec.describe UserPaymentsController, type: :controller do
       @test_user_payment = UserPayment.create( user_id: @test_user.id, amount_paid: 45, date: "2017-4-2", comment: "Good",payment_mode_id:@test_payment_mode.id)
       get :show, id:@test_user_payment.id
       expect(response.content_type).to eq "text/html"
-      #assigns(:user).should eq([user])
+
       response.should render_template :show
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe UserPaymentsController, type: :controller do
     end
 
       it 'deletes a UserPayment' do
-        #user = User.create( name: "p2", email: "p2@gmail.com", cost_of_meal: 60)
+
         delete :destroy,id:@test_user_payment.id
         expect(response.content_type).to eq "text/html"
         expect(response).to redirect_to user_payments_path

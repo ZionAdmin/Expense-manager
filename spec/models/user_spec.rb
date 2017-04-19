@@ -22,6 +22,7 @@ RSpec.describe User, type: :model do
     subject.cost_of_meal = nil
     expect(subject).to_not be_valid
     end
+  end
 
   describe "Associations" do
     it "has many expenses" do
@@ -33,5 +34,5 @@ RSpec.describe User, type: :model do
       expect(assc.macro).to eq :has_many
     end
   end
-  end
+
 end
