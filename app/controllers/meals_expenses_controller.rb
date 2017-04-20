@@ -20,15 +20,20 @@ end
     @dailyinvoice.expenses.build
   end
 
-
-
   def export
     users=User.all
     results = MealsExpense.get_date_details params
 
     respond_to do |format|
-      format.csv  { send_data  results, filename:"lunch_detail.csv"}
+      format.csv { send_data  results, filename:"lunch_detail.csv"}
     end
+  end
+
+  def import
+    #file = MealsExpense.import params
+  end
+ def import_result
+   @rowdisp = MealsExpense.import_result params
   end
 
   # def create
