@@ -1,4 +1,4 @@
-  class ExpenseManagerController < ApplicationController
-    def dashboard
-    end
+class ExpenseManagerController < ApplicationController
+  def dashboard
   end
+end
