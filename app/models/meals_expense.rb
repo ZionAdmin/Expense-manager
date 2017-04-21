@@ -64,9 +64,7 @@ class MealsExpense < Expense
       (calculation).each do |key,value|
         (value).each do |key1,value1|
 
-
          # week_array << value1
-
 
           puts "week amount is #{week_array}"
 
@@ -94,9 +92,51 @@ class MealsExpense < Expense
       csv << costofmeal
 
       results.each do |result|
-
         csv << result
       end
     end
   end
-end
+
+  def self.import params
+    @file = params[:file].read
+  end
+
+  def self.import_result params
+    rowarray = Array.new
+    first_row = []
+    @file = params[:file].read
+
+    csv = CSV.parse(@file, headers: false, :col_sep => ",")
+    #@rowdisp  = csv
+    csv.each do |row|
+      #puts row.inspect
+      rowarray << row
+      @rowdisp = rowarray
+
+      @rowdisp[0, 1].each do |line|
+        #puts "$$$$$$$$$$#{line.inspect}"
+        var = line.group_by(&:itself).map { |k, v| k }
+        puts "@@@@@@@@@@@@@@@#{var.inspect}"
+        var1 = var.map { |x| x.to_s.split('_u') }
+        #if var1.to_s.end_with?("_u")
+           @first_row = var1.values_at(2..23)
+              puts "$$$$$$$$$$$$$$$#{@first_row}"
+          @users = User.create(name: @first_row).to_s
+          @users.save
+         end
+
+      #end
+      end
+
+    end
+  end
+
+
+
+
+
+
+
+
+
+
