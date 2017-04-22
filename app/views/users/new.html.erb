@@ -27,7 +27,6 @@
 
           <div class="form-group">
             <%= f.label :Cost_of_meal %>
-            <%#= f.text_field  :cost_of_meal ,:class =>'form-control'%>
             <%= f.text_field :cost_of_meal, :onkeypress => "return isNumberKey(event)", :class => 'form-control' %>
           </div>
           <button type="save" class="btn btn-success btn-cons">Save</button>
@@ -37,14 +36,14 @@
   </div>
 </div>
 <script type="text/javascript">
-  function isNumberKey(evt) {
-    var charCode = (evt.which) ? evt.which : event.keyCode
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-      alert("Please Enter Only Numeric Value:");
-      return false;
+    function isNumberKey(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            alert("Please Enter Only Numeric Value:");
+            return false;
+        }
+        return true;
     }
-    return true;
-  }
 </script>
 
 

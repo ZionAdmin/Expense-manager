@@ -57,32 +57,33 @@
         <div class="clearfix"></div>
         <p></p>
         <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Bill Date</th>
-            <th>Restaurant Name</th>
-            <th>Amount</th>
-            <th>Type</th>
-            <th>Download</th>
-            <th>Action</th>
-          </tr>
-          </thead>
-          <tbody>
-          <% @daily_invoices.each do |dailyinvoice| %>
-              <tr>
-                <td><%= link_to dailyinvoice.date.strftime("%d-%m-%Y"), daily_invoice_path(dailyinvoice) %> </td>
-                <td><%= dailyinvoice.restaurant_name %></td>
-                <td><%= dailyinvoice.amount %></td>
-                <td><%= dailyinvoice.expenses.first.type rescue nil%></td>
-                <td><%= link_to "ViewBill", dailyinvoice.image.url, download: "ViewBill" %></td>
-                <td><%= link_to 'Show', daily_invoice_path(dailyinvoice) %> | <%#= link_to 'Edit', edit_daily_invoice_path(dailyinvoice) %> |
-                  <%= link_to 'Destroy', daily_invoice_path(dailyinvoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
-              </tr>
-          <% end %>
-          </tbody>
-        </table>
-          </div>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Bill Date</th>
+              <th>Restaurant Name</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Download</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @daily_invoices.each do |dailyinvoice| %>
+                <tr>
+                  <td><%= link_to dailyinvoice.date.strftime("%d-%m-%Y"), daily_invoice_path(dailyinvoice) %> </td>
+                  <td><%= dailyinvoice.restaurant_name %></td>
+                  <td><%= dailyinvoice.amount %></td>
+                  <td><%= dailyinvoice.expenses.first.type rescue nil %></td>
+                  <td><%= link_to "ViewBill", dailyinvoice.image.url, download: "ViewBill" %></td>
+                  <td><%= link_to 'Show', daily_invoice_path(dailyinvoice) %>
+                    | <%#= link_to 'Edit', edit_daily_invoice_path(dailyinvoice) %> |
+                    <%= link_to 'Destroy', daily_invoice_path(dailyinvoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
         <% if @daily_invoices.blank? %>
             <div id="error_explaination">
               <div class="alert alert-danger alert-dismissible" role="alert">
@@ -99,9 +100,9 @@
 </div>
 
 <script type="text/javascript">
-  $(document).ready(function () {
-    $(".date").datepicker({dateFormat: "yy-mm-dd"});
-  });
+    $(document).ready(function () {
+        $(".date").datepicker({dateFormat: "yy-mm-dd"});
+    });
 </script>
 
 

@@ -5,7 +5,7 @@
       <%= form_for (@userpayment) do |f| %>
           <div class="form-group">
             <%= f.label :User %>
-            <%= f.select 'user_id', options_for_select(@users.collect { |u| [u.name, u.id] }), :class => 'form-control' %>
+            <%= f.select 'user_id', options_for_select(@users.collect {|u| [u.name, u.id]}), :class => 'form-control' %>
           </div>
           <div class="form-group">
             <%= f.label :Amount_paid %>
@@ -13,7 +13,7 @@
           </div>
           <div class="form-group">
             <%= f.label :Payment_gateway %>
-            <%= f.select 'payment_mode_id', options_for_select(@paymentmodes.collect { |u| [u.payment_gateway, u.id] }), :class => 'form-control' %>
+            <%= f.select 'payment_mode_id', options_for_select(@paymentmodes.collect {|u| [u.payment_gateway, u.id]}), :class => 'form-control' %>
           </div>
           <div class="form-group">
             <%= f.label :Comment %>
@@ -38,7 +38,7 @@
   </div>
 </div>
 <script type="text/javascript">
-  $(document).ready(function () {
-    $("#user_payment_date").datepicker({dateFormat: "yy-mm-dd"});
-  });
+    $(document).ready(function () {
+        $("#user_payment_date").datepicker({dateFormat: "yy-mm-dd"});
+    });
 </script>
