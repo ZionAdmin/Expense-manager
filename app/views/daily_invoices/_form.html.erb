@@ -41,7 +41,7 @@
         <%= l.label :Users %></br>
         <% User.all.each do |c| %>
             <div class="checkbox-inline">
-              <%= check_box_tag "daily_invoice[expense][user_ids][]", c.id %>
+              <%= check_box_tag "daily_invoice[expense][user_ids][]", c.id, @daily_invoice.expenses.collect{|x|x.user_id}.include?(c.id) %>
               <%= label_tag "daily_invoice[expense][user_ids][][#{c.id}]", c.name %>
             </div>
         <% end %>
@@ -76,6 +76,6 @@
 <script type="text/javascript">
   $(document).ready(function () {
     $(".bill_date").datepicker({dateFormat: "yy-mm-dd"});
-    $(".date").multiDatesPicker();
+    $(".date").multiDatesPicker({dateFormat: "yy-mm-dd"});
   });
 </script>

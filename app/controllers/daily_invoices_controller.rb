@@ -4,9 +4,10 @@ class DailyInvoicesController < ApplicationController
   # index
   #
   def index
-    @daily_invoices = DailyInvoice.paginate(:page => params[:page], :per_page => 15)
+    @daily_invoices = DailyInvoice.all
     @daily_invoices = @daily_invoices.joins(:expenses).where('expenses.type = ?', params[:type_ids]).uniq if params[:type_ids].present?
-    @daily_invoices = @daily_invoices.where('daily_invoices.date LIKE ?', Date.parse("%#{params[:date]}%", '%MM-%DD-%YYYY')) if params[:date].present?
+    @daily_invoices = @daily_invoices.where('date=?', "#{params[:date]}") if params[:date].present?
+    @daily_invoices = @daily_invoices.paginate(:page => params[:page], :per_page => 15)
   end
 
   #
@@ -22,7 +23,7 @@ class DailyInvoicesController < ApplicationController
   #
   def edit
     @daily_invoice = DailyInvoice.find(params[:id])
-    @daily_invoice.expenses.build
+    @daily_invoice.expenses
   end
 
   #
@@ -45,11 +46,12 @@ class DailyInvoicesController < ApplicationController
     @daily_invoice.save
     date_array = params[:daily_invoice][:expense][:date].split(',')
     user_ids = params[:daily_invoice][:expense][:user_ids]
-    date_array.each do |d| date = Time.strptime(d, "%m/%d/%Y").strftime('%Y-%m-%d')
-    user_ids.each do |user_id| @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
-    @expense.user_id = user_id
-    @expense.save
-    end
+    date_array.each do |date|
+      user_ids.each do |user_id|
+        @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
+        @expense.user_id = user_id
+        @expense.save
+      end
     end
     if @expense.save
       redirect_to daily_invoices_path
@@ -63,17 +65,18 @@ class DailyInvoicesController < ApplicationController
   #
   def update
     @daily_invoice = DailyInvoice.find(params[:id])
-    @daily_invoice = @daily_invoice.update(daily_invoice_params)
+
     date_array = params[:daily_invoice][:expense][:date].split(',')
     user_ids = params[:daily_invoice][:expense][:user_ids]
 
-    date_array.each do |d|
-      user_ids.each do |user_id| date = Time.strptime(d, "%m/%d/%Y").strftime('%Y-%m-%d')
-        @expense = Expense.where(daily_invoice_id: params[:id])
+    date_array.each do |date|
+      user_ids.each do |user_id|
+        @expense = @daily_invoice.expenses
         @expense = @expense.update(daily_invoice_id: params[:id], date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
-        @expense.update :user_id => user_id
+        # @expense.update :user_id => user_id
       end
     end
+    @daily_invoice = @daily_invoice.update(daily_invoice_params)
     redirect_to daily_invoices_path
   end
 
