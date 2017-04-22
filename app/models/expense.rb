@@ -1,11 +1,14 @@
-  class Expense < ApplicationRecord
-    # has_one :daily_invoice
-    belongs_to :daily_invoice
-    belongs_to :user
-    validate :user_id
-    acts_as_paranoid
-    default_scope { where(deleted_at: nil) }
-    EXPENSE_TYPES = ["MealsExpense", "FruitsExpense", "SnaksExpense"]
+class Expense < ApplicationRecord
+  acts_as_paranoid
 
-  end
+  belongs_to :daily_invoice
+  belongs_to :user
+
+  validate :user_id
+
+  default_scope {where(deleted_at: nil)}
+
+  EXPENSE_TYPES = ["MealsExpense", "FruitsExpense", "SnaksExpense"]
+
+end
 
