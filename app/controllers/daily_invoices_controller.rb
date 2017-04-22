@@ -1,5 +1,6 @@
 class DailyInvoicesController < ApplicationController
   require 'date'
+
   #
   # index
   #
@@ -13,7 +14,7 @@ class DailyInvoicesController < ApplicationController
   # new
   #
   def new
-    @daily_invoice= DailyInvoice.new
+    @daily_invoice = DailyInvoice.new
     @daily_invoice.expenses.build
   end
 
@@ -29,7 +30,7 @@ class DailyInvoicesController < ApplicationController
   # show
   #
   def show
-    @daily_invoice= DailyInvoice.find(params[:id])
+    @daily_invoice = DailyInvoice.find(params[:id])
     @expense_array = Expense.where(daily_invoice_id: @daily_invoice.id)
     user_array = @expense_array.collect {|users| users.user.name}.uniq
     @users = user_array.join(", ")
@@ -45,11 +46,13 @@ class DailyInvoicesController < ApplicationController
     @daily_invoice.save
     date_array = params[:daily_invoice][:expense][:date].split(',')
     user_ids = params[:daily_invoice][:expense][:user_ids]
-    date_array.each do |d| date = Time.strptime(d, "%m/%d/%Y").strftime('%Y-%m-%d')
-    user_ids.each do |user_id| @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
-    @expense.user_id = user_id
-    @expense.save
-    end
+    date_array.each do |d|
+      date = Time.strptime(d, "%m/%d/%Y").strftime('%Y-%m-%d')
+      user_ids.each do |user_id|
+        @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
+        @expense.user_id = user_id
+        @expense.save
+      end
     end
     if @expense.save
       redirect_to daily_invoices_path
@@ -68,7 +71,8 @@ class DailyInvoicesController < ApplicationController
     user_ids = params[:daily_invoice][:expense][:user_ids]
 
     date_array.each do |d|
-      user_ids.each do |user_id| date = Time.strptime(d, "%m/%d/%Y").strftime('%Y-%m-%d')
+      user_ids.each do |user_id|
+        date = Time.strptime(d, "%m/%d/%Y").strftime('%Y-%m-%d')
         @expense = Expense.where(daily_invoice_id: params[:id])
         @expense = @expense.update(daily_invoice_id: params[:id], date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
         @expense.update :user_id => user_id
@@ -98,17 +102,23 @@ class DailyInvoicesController < ApplicationController
       elsif @daily_invoices.blank?
         @date_error = true
         @date_error_message = "No records found"
-      else @vardate=params['date']
+      else
+        @vardate=params['date']
       end
     end
     @total_amount = []
     total_amount_calculation = Expense.where("expenses.date =? AND had_lunch = ?", @vardate, true)
-    total_amount_calculation.each do |lunch_detail| @total_amount << lunch_detail.user.cost_of_meal
+    total_amount_calculation.each do |lunch_detail|
+      @total_amount << lunch_detail.user.cost_of_meal
     end
     @total_amount = @total_amount.sum
   end
 
   private
+
+  #
+  # daily_invoice_params
+  #
   def daily_invoice_params
     params.require(:daily_invoice).permit(:restaurant_name, :amount, :date, :image, :price, expense_attributes: [:id, :daily_invoice_id, :date, :had_lunch, :type, user_id: []])
   end

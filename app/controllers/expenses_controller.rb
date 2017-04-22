@@ -51,6 +51,10 @@ class ExpensesController < ApplicationController
 
   private
 
+  #
+  # daily_invoice_params
+  #
   def daily_invoice_params
+
   end
 end
