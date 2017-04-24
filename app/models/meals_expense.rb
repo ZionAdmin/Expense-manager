@@ -103,30 +103,72 @@ class MealsExpense < Expense
 
   def self.import_result params
     rowarray = Array.new
-    first_row = []
     @file = params[:file].read
 
     csv = CSV.parse(@file, headers: false, :col_sep => ",")
-    #@rowdisp  = csv
-    csv.each do |row|
-      #puts row.inspect
-      rowarray << row
-      @rowdisp = rowarray
 
-      @rowdisp[0, 1].each do |line|
-        #puts "$$$$$$$$$$#{line.inspect}"
-        var = line.group_by(&:itself).map { |k, v| k }
-        puts "@@@@@@@@@@@@@@@#{var.inspect}"
-        var1 = var.map { |x| x.to_s.split('_u') }
-        #if var1.to_s.end_with?("_u")
-           @first_row = var1.values_at(2..23)
-              puts "$$$$$$$$$$$$$$$#{@first_row}"
-          @users = User.create(name: @first_row).to_s
-          @users.save
-         end
-
-      #end
+    csv.each_with_index do |row, index|
+      #puts"row===>#{row}"
+      #puts "index===>#{index}"
+      users_array = []
+      cost_of_meal = nil
+      if index == 0
+        users = row.compact.select{|obj| obj.include?("_u")}
+        @users = users.map { |x| x.to_s.split('_u') }.flatten
+        puts "@users =====>#{@users}"
+        @users.each do |user|
+          users = User.create(name: user)
+            users.save(validate:false)
+       end
       end
+     if index == 1
+       #puts "row=========>#{row}"
+        #cost_of_meal = row.shift
+        #puts "cost_of_meal======>#{cost_of_meal}"  
+        
+        cost_of_meals = row.compact.select{|obj1| obj1.include?("_s")}
+        #puts "cost_of_meal====>#{cost_of_meal}"
+        @costofmeal = cost_of_meals.map {|s| s.split('_s')}.flatten
+        #puts "@costofmeal ====>#{@costofmeal}"
+        
+        results = @users.zip(@costofmeal)
+        puts "results======>#{results}"
+        
+        results.each do |result|
+          users = User.create(name:result,cost_of_meal: result)
+          users.save
+          end
+        end
+     
+    
+  end
+     
+
+    # rowarray << row
+    # @rowdisp = rowarray
+    #
+    # @rowdisp[0,1].each do |line|
+    #   users = line.compact.select{|obj| obj.include?("_u")}
+    #   #puts "$$$$$$$$$$#{line.inspect}"
+    #   # var = line.group_by(&:itself).map { |k, v| k }
+    #   # puts "@@@@@@@@@@@@@@@#{var.inspect}"
+    #   users = users.map { |x| x.to_s.split('_u') }.flatten
+    #   # users.each do |user|
+    #   #   @users = User.create(name: user)
+    #   #   @users.save(validate:false)
+    #   # end
+    #
+    #
+    #   # #if var1.to_s.end_with?("_u")
+    #   #    @first_row = var1.values_at(2..23)
+    #   #       puts "$$$$$$$$$$$$$$$#{@first_row}"
+		#users.each do |user|
+    #   #   @users = User.create(name: @first_row)
+    #   #   @users.save
+		#end
+    # end
+
+    #end
 
     end
   end
