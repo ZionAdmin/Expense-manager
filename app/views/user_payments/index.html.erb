@@ -15,27 +15,13 @@
     <tbody>
     <% @userpayments.each do |userpayment| %>
         <tr>
-          <td>
-            <%= userpayment.user.name %>
-          </td>
-          <td>
-            <%= userpayment.amount_paid %>
-          </td>
-          <td>
-            <%= userpayment.payment_mode.payment_gateway %>
-          </td>
-          <td>
-            <%= userpayment.date %>
-          </td>
-          <td>
-            <%= userpayment.comment %>
-          </td>
-          <td>
-            <%= userpayment.created_at %>
-          </td>
-          <td>
-            <%= userpayment.updated_at %>
-          </td>
+          <td><%= userpayment.user.name %></td>
+          <td><%= userpayment.amount_paid %></td>
+          <td><%= userpayment.payment_mode.payment_gateway %></td>
+          <td><%= userpayment.date %></td>
+          <td><%= userpayment.comment %></td>
+          <td><%= userpayment.created_at %></td>
+          <td><%= userpayment.updated_at %></td>
           <td><%= link_to 'Destroy', user_payment_path(userpayment), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
         </tr>
     <% end %>

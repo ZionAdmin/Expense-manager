@@ -14,7 +14,7 @@
               <div class="col-sm-3">
                 <p>
                   User
-                  <%= select_tag 'user_id', options_for_select(@users.collect { |u| [u.name, u.id] }) %>
+                  <%= select_tag 'user_id', options_for_select(@users.collect {|u| [u.name, u.id]}) %>
                 </p>
               </div>
               <div class="col-sm-3">
@@ -56,7 +56,7 @@
   </div>
 </div>
 <script type="text/javascript">
-  $(document).ready(function () {
-    $("#daily_detail_date").datepicker({dateFormat: "yy-mm-dd"});
-  });
+    $(document).ready(function () {
+        $("#daily_detail_date").datepicker({dateFormat: "yy-mm-dd"});
+    });
 </script>

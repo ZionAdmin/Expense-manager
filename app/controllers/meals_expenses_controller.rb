@@ -1,10 +1,11 @@
 class MealsExpensesController < ApplicationController
+
   #
   # index
   #
   def index
-    @from_date=params[:from_date]
-    @to_date=params[:to_date]
+    @from_date = params[:from_date]
+    @to_date = params[:to_date]
 
   end
 
@@ -29,12 +30,17 @@ class MealsExpensesController < ApplicationController
   #
   def export
     results = MealsExpense.get_date_details params
-    respond_to do |format| format.csv {send_data results, filename: "lunch_detail_#{Time.now.to_i}.csv"}
+    respond_to do |format|
+      format.csv {send_data results, filename: "lunch_detail_#{Time.now.to_i}.csv"}
     end
   end
 
 
   private
+
+  #
+  # lunch_detail_params
+  #
   def lunch_detail_params
     params.require(:lunch_detail).permit(:date, :daily_invoice_id, :had_lunch)
   end

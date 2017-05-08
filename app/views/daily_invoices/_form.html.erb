@@ -3,8 +3,7 @@
       <h2><%= pluralize(@daily_invoice.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
         <% @daily_invoice.errors.full_messages.each do |message| %>
-            <li><%= message %>
-            </li>
+            <li><%= message %></li>
         <% end %>
       </ul>
     </div>
@@ -18,7 +17,7 @@
   <div class="help-block with-errors"></div>
   <div class="form-group">
     <%= f.label :Amount %>
-    <%= f.text_field :amount, class: 'form-control', required: true%>
+    <%= f.text_field :amount, class: 'form-control', required: true %>
   </div>
   <div class="form-group">
     <div class="row">
@@ -30,7 +29,7 @@
   </div>
   <div class="form-group">
     <%= f.label :Bill %>
-    <%= f.file_field :image, class: 'form-control'%>
+    <%= f.file_field :image, class: 'form-control' %>
   </div>
 </div>
 <!--Expense Details starts-->
@@ -50,7 +49,7 @@
         <div class="row">
           <div class="col-sm-5">
             <%= l.label :Date %>
-            <%= l.text_field :date, class: 'form-control date', required: true%>
+            <%= l.text_field :date, class: 'form-control date', required: true %>
           </div>
         </div>
       </div>
@@ -72,6 +71,7 @@
       <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
     </div>
 <% end %>
+
 <!--Expense Details ends-->
 <script type="text/javascript">
   $(document).ready(function () {

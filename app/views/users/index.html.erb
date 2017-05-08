@@ -12,27 +12,14 @@
     <tbody>
     <% @users.each do |user| %>
         <tr>
-          <td>
-            <%= link_to "#{user.name}", edit_user_path(user) %>
-          </td>
-
-          <td>
-            <%= user.cost_of_meal %>
-          </td>
-
-          <td>
-            <%= user.created_at %>
-          </td>
-
-          <td>
-            <%= user.updated_at %>
-          </td>
+          <td><%= link_to "#{user.name}", edit_user_path(user) %></td>
+          <td><%= user.cost_of_meal %></td>
+          <td><%= user.created_at %></td>
+          <td><%= user.updated_at %></td>
           <td><%= link_to 'Destroy', user_path(user), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
         </tr>
     <% end %>
     </tbody>
   </table>
-  <p>
-    <%= link_to 'New User', new_user_path, :class => "btn btn-primary" %>
-  </p>
+  <p><%= link_to 'New User', new_user_path, :class => "btn btn-primary" %></p>
 </div>
