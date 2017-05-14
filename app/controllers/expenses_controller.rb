@@ -49,6 +49,10 @@ class ExpensesController < ApplicationController
 
   end
 
+  def imports
+
+  end
+
   private
 
   #
