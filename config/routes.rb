@@ -4,7 +4,8 @@
      resources :expenses
      resources :meals_expenses, controller: "meals_expenses", type: "MealsExpense" do
        collection do
-         get "export"
+         get :export
+         post :import
        end
      end
      resources :fruits_expenses, controller: "expenses", type: "FruitsExpense"
@@ -17,6 +18,6 @@
 
      resources :user_payments
      resources :payment_modes
-     resources :bootstraps
+
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   end

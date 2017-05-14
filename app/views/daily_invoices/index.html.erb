@@ -15,7 +15,7 @@
             <div class="row">
               <div class="col-xs-12 filter-label">
                 <label for="type">Types:</label>
-                <% Expense::EXPENSE_TYPES.each do |type| %>
+                <% Expense::TYPES.each do |type| %>
                     <% @expense_checked = params[:type_ids] %>
                     <div class="checkbox-inline filter-type">
                       <% if params[:type_ids].present? && (params[:type_ids].include? type.to_s) %>
