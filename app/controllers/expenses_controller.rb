@@ -50,7 +50,14 @@ class ExpensesController < ApplicationController
   end
 
   def imports
-
+    response = Expense.import_data (params[:file])
+    if response[:status] = 'success'
+      redirect_to root_path
+      flash[:notice] = "Successfully Imported"
+    else
+      redirect_back
+      flash[:error] = "Something went wrong"
+    end
   end
 
   private
