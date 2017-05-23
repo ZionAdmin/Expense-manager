@@ -10,6 +10,12 @@ group :development, :test, :stage do
   ruby "2.4.1"
 end
 
+group :development, :test do
+  gem "pry-byebug"
+end
+
+gem "pry-rails"
+
 gem 'mysql2'
 # gem 'bootstrap'
 

@@ -1,11 +1,14 @@
   Rails.application.routes.draw do
      root "daily_invoices#index"
      resources :users
-     resources :expenses
+     resources :expenses do
+       collection do
+         post :imports
+       end
+     end
      resources :meals_expenses, controller: "meals_expenses", type: "MealsExpense" do
        collection do
          get :export
-         post :import
        end
      end
      resources :fruits_expenses, controller: "expenses", type: "FruitsExpense"
