@@ -7,7 +7,7 @@ class DailyInvoicesController < ApplicationController
   def index
     @daily_invoices = DailyInvoice.all
     @daily_invoices = @daily_invoices.joins(:expenses).where('expenses.type = ?', params[:type_ids]).uniq if params[:type_ids].present?
-    @daily_invoices = @daily_invoices.where('date=?', "#{params[:date]}") if params[:date].present?
+    @daily_invoices = @daily_invoices.where('daily_invoices.date=?', "#{params[:date]}") if params[:date].present?
     @daily_invoices = @daily_invoices.paginate(:page => params[:page], :per_page => 15)
   end
 
