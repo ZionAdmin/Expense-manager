@@ -1,4 +1,8 @@
-<div class="col-md-10 col-md-offset-1">
+<div class="col-xs-12">
+  <div class="card">
+  <div class="header">
+    <h1>Editing User</h1>
+  </div>
   <%= form_for(@user) do |f| %>
       <div class="form-group">
         <% if @user.errors.any? %>
@@ -13,29 +17,34 @@
             </div>
             </div>
         <% end %>
-
+      <div class="body">
         <fieldset>
-          <legend>
-            <h1>Editing User</h1>
-          </legend>
 
           <div class="form-group">
+            <div class="form-line">
             <%= f.label :Name %>
             <%= f.text_field :name, :class => 'form-control' %>
+            </div>
           </div>
           <div class="form-group">
+            <div class="form-line">
             <%= f.label :Email %>
             <%= f.text_field :email, :class => 'form-control' %>
+            </div>
           </div>
 
           <div class="form-group">
+            <div class="form-line">
             <%= f.label :Cost_of_meal %>
             <%= f.text_field :cost_of_meal, :onkeypress => "return isNumberKey(event)", :class => 'form-control' %>
+            </div>
           </div>
           <button type="save" class="btn btn-success btn-cons">Save</button>
           <%= link_to 'Cancel', users_path, :class => "btn btn-danger btn-cons" %>
         </fieldset>
+      </div>
   <% end %>
+  </div>
 </div>
 <script type="text/javascript">
     function isNumberKey(evt) {
