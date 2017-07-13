@@ -4,7 +4,7 @@
     <div class="body">
       <div class="row">
         <!--Daily Invoices starts-->
-        <%= form_for @daily_invoice do |f| %>
+        <%= form_for @daily_invoice, html: {id: "daily_invoice_form"} do |f| %>
             <% render partial: 'form', locals: {f: f} %>
         <% end %>
         <!--Daily Invoices ends-->

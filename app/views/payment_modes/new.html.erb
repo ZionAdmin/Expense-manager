@@ -4,11 +4,11 @@
       <h2>Payment Modes</h2>
     </div>
     <div class="body">
-    <%= form_for (@paymentmode) do |f| %>
+    <%= form_for (@paymentmode), html: {id: "payment_mode_form"} do |f| %>
         <div class="form-group">
           <div class="form-line">
           <%= f.label :payment_gateway %>
-          <%= f.text_field :payment_gateway, :class => 'form-control', :id => 'paymentgateway' %>
+          <%= f.text_field :payment_gateway, :class => 'form-control required', :id => 'paymentgateway' %>
           </div>
         </div>
         <button type="save" class="btn btn-success btn-cons">Save</button>
@@ -17,7 +17,5 @@
     </div>
   </div>
 </div>
-
-
 
 

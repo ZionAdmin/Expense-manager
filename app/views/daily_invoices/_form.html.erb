@@ -10,7 +10,7 @@
 <% end %>
 
 <div class="col-xs-6">
-  <div class="form-group">
+  <div class="form-group ">
     <div class="form-line">
     <%= f.label :Restaurant_Name %>
     <%= f.text_field :restaurant_name, class: 'form-control', required: true %>
@@ -29,7 +29,7 @@
         <div class="demo-google-material-icon">
             <%= f.label :Bill_Date %>
             <span class="icon-name"><i class="material-icons", id="cal1", style = "position: absolute; margin-top: -3px;">date_range</i></span>
-            <%= f.text_field :date, class: 'form-control bill_date' %>
+            <%= f.text_field :date, class: 'form-control bill_date', required: true %>
         </div>
       </div>
     </div>
