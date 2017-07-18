@@ -119,6 +119,15 @@ class DailyInvoicesController < ApplicationController
     @total_amount = @total_amount.sum
   end
 
+  def previous_record
+    @daily_invoice = DailyInvoice.last
+    @expenses = @daily_invoice.expenses
+
+    #logger.info("#{@expenses.inspect}")
+    respond_to do |format|
+      format.js { render 'previous_record'}
+    end
+  end
   private
 
   #
