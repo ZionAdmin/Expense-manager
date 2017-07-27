@@ -47,7 +47,7 @@
       <div class="form-group">
         <div class="checkboxinline">
           <%= l.label :Users %></br>
-          <% User.all.each do |c| %>
+          <% User.enable_users.each do |c| %>
               <%= check_box_tag "daily_invoice[expense][user_ids][#{c.id}]", c.id, @daily_invoice.expenses.collect{|x|x.user_id}.include?(c.id), class: "filled-in" %>
               <%= label_tag "daily_invoice[expense][user_ids][#{c.id}]", c.name %>
           <% end %>
