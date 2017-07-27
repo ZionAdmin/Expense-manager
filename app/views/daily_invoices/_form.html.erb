@@ -35,8 +35,13 @@
     </div>
   </div>
   <div class="form-group">
+    <h5>Type</h5>
+      <%= f.check_box :is_prepaid, class: "filled-in" %>
+      <%= f.label :is_prepaid %>
+  </div>
+  <div class="form-group">
     <%= f.label :Bill %>
-    <%= f.file_field :image, class: 'form-control' %>
+    <%= f.file_field :image, class: 'form-control', id: 'bill_id' %>
   </div>
 </div>
 
@@ -93,5 +98,9 @@
     $('#cal2').click(function(){
       $(".date").multiDatesPicker({dateFormat: "yy-mm-dd"}).focus();
     });
+    $('#daily_invoice_is_prepaid').click(function(){
+        $("#bill_id").addClass("required");
+    });
+
   });
 </script>

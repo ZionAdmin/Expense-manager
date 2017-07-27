@@ -134,7 +134,7 @@ class DailyInvoicesController < ApplicationController
   # daily_invoice_params
   #
   def daily_invoice_params
-    params.require(:daily_invoice).permit(:restaurant_name, :amount, :date, :image, :price, expense_attributes: [:id, :daily_invoice_id, :date, :had_lunch, :type, user_id: []])
+    params.require(:daily_invoice).permit(:restaurant_name, :amount, :is_prepaid, :date, :image, :price, expense_attributes: [:id, :daily_invoice_id, :date, :had_lunch, :type, user_id: []])
   end
 end
 
