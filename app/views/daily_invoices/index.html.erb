@@ -12,59 +12,68 @@
           </ul>
         </li>
       </ul>
-     </div>
-      <div class="body">
-        <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
-          <div class="panel panel-primary">
-            <div class="panel-heading" role="tab" id="headingOne_1">
-              <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseOne_1" aria-expanded="false" aria-controls="collapseOne_1" class="collapsed">
-                  Filter
-                </a>
-              </h4>
-            </div>
-            <div id="collapseOne_1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne_1" aria-expanded="false" style="height: 0px;">
-              <div class="panel-body">
-                <%= form_tag(daily_invoices_path, method: :get, id: "filter-form") do %>
-                    <div class="row">
-                      <div class="col-xs-12 filter-label">
-                        <label for="type">Types:</label>
-                        <% Expense::TYPES.each do |type| %>
-                            <% @expense_checked = params[:type_ids] %>
-                            <div class="checkbox-inline filter-type ">
-                              <% if params[:type_ids].present? && (params[:type_ids].include? type.to_s) %>
-                                  <%= check_box_tag "type_ids[#{type}]", type, @expense_checked, class: "filled-in" %>
-                                  <%= label_tag "type_ids[#{type}]", type %>
-                              <% else %>
-                                  <%= check_box_tag "type_ids[#{type}]", 'yes', false, class: "filled-in" %>
-                                  <%= label_tag "type_ids[#{type}]", type  %>
-                              <% end %>
+    </div>
+
+          <div class="body">
+            <div class="row clearfix">
+              <div class="col-xs-12 ">
+                <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading" role="tab" id="headingOne_1">
+                      <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseOne_1" aria-expanded="true" aria-controls="collapseOne_1">
+                          Filter
+                        </a>
+                      </h4>
+                    </div>
+
+                    <div id="collapseOne_1" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne_1">
+                      <div class="panel-body">
+                        <%= form_tag(daily_invoices_path, method: :get, id: "filter-form") do %>
+                            <div class="row">
+                              <div class="col-xs-12 filter-label">
+                                <label for="type">Types:</label>
+                                <% Expense::TYPES.each do |type| %>
+                                    <% @expense_checked = params[:type_ids] %>
+                                    <div class="checkbox-inline filter-type ">
+                                      <% if params[:type_ids].present? && (params[:type_ids].include? type.to_s) %>
+                                          <%= check_box_tag "type_ids[#{type}]", type, @expense_checked, class: "filled-in" %>
+                                          <%= label_tag "type_ids[#{type}]", type %>
+                                      <% else %>
+                                          <%= check_box_tag "type_ids[#{type}]", 'yes', false, class: "filled-in" %>
+                                          <%= label_tag "type_ids[#{type}]", type %>
+                                      <% end %>
+                                    </div>
+                                <% end %>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xs-5 filter-label">
+                                <label for="date">Date:</label>
+                                <div class="checkbox-inline filter-date">
+                                  <input type="text" name="date" value="<%= params[:date] %>" class="date"/>
+                                </div>
+                              </div>
+                            </div>
+                            <div clas="clearfix"></div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-xs-12 form-group filter-label pull-left">
+                                <%= submit_tag "Apply", name: nil, class: "btn btn-success btn-cons" %>
+                                <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
+                              </div>
                             </div>
                         <% end %>
                       </div>
                     </div>
-                    
-                    <div class="row">
-                      <div class="col-xs-5 filter-label">
-                        <label for="date">Date:</label>
-                        <div class="checkbox-inline filter-date">
-                          <input type="text" name="date" value="<%= params[:date] %>" class="date"/>
-                        </div>
-                      </div>
-                    </div>
-                    <div clas="clearfix"></div>
-                    <br/>
-                    <div class="row">
-                      <div class="col-xs-12 form-group filter-label pull-left">
-                        <%= submit_tag "Apply", name: nil, class: "btn btn-success btn-cons" %>
-                        <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
-                      </div>
-                    </div>
-                <% end %>              </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="clearfix"></div>
+
+          <div class="clearfix"></div>
         <p></p>
         <div class="body table-responsive">
           <table class="table table-bordered">
@@ -104,6 +113,7 @@
             </div>
         <% end %>
         <div class="text-center"><%= will_paginate @daily_invoices, renderer: BootstrapPagination::Rails  %></div>
+        </div>
       </div>
     </div>
   </div>

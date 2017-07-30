@@ -25,6 +25,7 @@
 //= require bootstrap-notify
 //= require waves.min
 //= require jquery.slimscroll
+//= require jquery.validate
 
 // = require_tree .
 

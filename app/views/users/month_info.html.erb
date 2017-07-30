@@ -1,7 +1,7 @@
-<div class="col-md-10 col-md-offset-1">
-  <div class="panel panel-success">
-    <div class="panel-heading">Month Info</div>
-    <div class="panel-body">
+<div class="col-xs-12">
+  <div class="card">
+    <div class="header">Month Info</div>
+    <div class="body">
       <%= form_tag(month_info_path) do %>
           <div class="container-fluid">
             <div class="row">
@@ -19,7 +19,7 @@
               </div>
               <div class="col-sm-3">
                 <p>
-                  <%= submit_tag("Submit") %>
+                  <%= submit_tag("Submit", class: "btn btn-primary waves-effect") %>
                 </p>
               </div>
             </div>
@@ -27,9 +27,9 @@
       <% end %>
     </div>
   </div>
-  <div class="panel panel-info">
-    <div class="panel-heading">Results</div>
-    <div class="panel-body">
+  <div class="card">
+    <div class="header">Results</div>
+    <div class="body table-responsive">
       <table class="table table-bordered">
         <thead>
         <tr>
