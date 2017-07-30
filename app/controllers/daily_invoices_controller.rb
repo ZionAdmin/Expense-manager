@@ -6,7 +6,7 @@ class DailyInvoicesController < ApplicationController
   #
   def index
     @daily_invoices = DailyInvoice.all
-    @daily_invoices = @daily_invoices.joins(:expenses).where('expenses.type = ?', params[:type_ids]).uniq if params[:type_ids].present?
+    @daily_invoices = @daily_invoices.joins(:expenses).where('expenses.type = ?', params[:type_ids].keys).distinct if params[:type_ids].present?
     @daily_invoices = @daily_invoices.where('daily_invoices.date=?', "#{params[:date]}") if params[:date].present?
     @daily_invoices = @daily_invoices.paginate(:page => params[:page], :per_page => 15)
   end
@@ -47,11 +47,11 @@ class DailyInvoicesController < ApplicationController
     @daily_invoice.save
     date_array = params[:daily_invoice][:expense][:date].split(',')
     user_ids = params[:daily_invoice][:expense][:user_ids]
-    
+
     date_array.each do |date|
-      
+
       user_ids.each do |user_id|
-        
+
         @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
         @expense.user_id = user_id
         @expense.save
