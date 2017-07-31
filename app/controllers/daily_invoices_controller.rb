@@ -122,10 +122,12 @@ class DailyInvoicesController < ApplicationController
   def previous_record
     @daily_invoice = DailyInvoice.last
     @expenses = @daily_invoice.expenses
-
-    #logger.info("#{@expenses.inspect}")
+    @users =[]
+    @expenses.each do |exp|
+      @users << exp.user
+    end
     respond_to do |format|
-      format.js { render 'previous_record'}
+      format.js
     end
   end
   private

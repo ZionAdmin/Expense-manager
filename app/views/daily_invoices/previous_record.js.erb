@@ -1,5 +1,6 @@
-exp = jQuery.parseJSON('<%=raw @expenses.to_json %>')
-jQuery.each(exp, function( i, val ) {
-  $('#daily_invoice_expense_user_ids_'+val.user_id).prop('checked', true);
-});
+users = <%=raw @users.to_json %>
+  for(i=0;i<users.length;i++)
+  {
+    $('#daily_invoice_expense_user_ids_'+users[i].id).prop('checked', true);
+  }
 
