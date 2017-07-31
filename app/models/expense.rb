@@ -14,7 +14,7 @@ class Expense < ApplicationRecord
   # import_data
   #
   # params {FILE} file
-  def self.import_data(user_suffix, company_suffix, file, type = "MealsExpense" )
+  def self.import_data(file, type = "MealsExpense", user_suffix, company_suffix)
     row_hash = Hash.new
     header_hash = Hash.new
     begin
