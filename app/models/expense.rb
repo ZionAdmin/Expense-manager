@@ -63,10 +63,10 @@ class Expense < ApplicationRecord
         end
       end
       return  "success"
-    rescue Exception => nh
-      return nh.message
-    rescue Exception => hm
-      return hm.message
+    rescue Exception => e
+      return e.message
+    rescue Exception => e
+      return e.message
     rescue
       return  "failure"
 
