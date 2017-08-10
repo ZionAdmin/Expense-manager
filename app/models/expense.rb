@@ -8,7 +8,7 @@ class Expense < ApplicationRecord
 
   default_scope {where(deleted_at: nil)}
 
-  TYPES = ["MealsExpense", "FruitsExpense", "SnaksExpense"]
+  TYPES = ["MealsExpense", "FruitsExpense", "SnaksExpense", "CustomExpense"]
 
   #
   # import_data

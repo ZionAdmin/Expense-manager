@@ -1,4 +1,5 @@
   Rails.application.routes.draw do
+  resources :custom_expense_types
      root "daily_invoices#index"
      resources :users
      resources :expenses do

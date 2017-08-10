@@ -33,7 +33,7 @@
                             <div class="row">
                               <div class="col-xs-12 filter-label">
                                 <label for="type">Types:</label>
-                                <% Expense::TYPES.each do |type| %>
+                                <% ((Expense::TYPES)+@custom_expense_type_all).each do |type| %>
                                     <% @expense_checked = params[:type_ids] %>
                                     <div class="checkbox-inline filter-type ">
                                       <% if params[:type_ids].present? && (params[:type_ids].include? type.to_s) %>
@@ -83,6 +83,7 @@
               <th>Restaurant Name</th>
               <th>Amount</th>
               <th>Type</th>
+              <th>Custom Expense Type</th>
               <th>Download</th>
               <th>Action</th>
             </tr>
@@ -94,6 +95,7 @@
                   <td><%= dailyinvoice.restaurant_name %></td>
                   <td><%= dailyinvoice.amount %></td>
                   <td><%= dailyinvoice.expenses.first.type rescue nil %></td>
+                  <td><%= dailyinvoice.expenses.first.custom_expense_type.name rescue nil %></td>
                   <td><%= link_to "ViewBill", dailyinvoice.image.url, download: "ViewBill" %></td>
                   <td><%= link_to 'Show', daily_invoice_path(dailyinvoice) %>
                     | <%#= link_to 'Edit', edit_daily_invoice_path(dailyinvoice) %> |
