@@ -26,6 +26,8 @@
 //= require waves.min
 //= require jquery.slimscroll
 //= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require jquery.steps
 
 // = require_tree .
 
