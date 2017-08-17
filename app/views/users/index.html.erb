@@ -20,6 +20,7 @@
       <tr>
         <th>Name</th>
         <th>Cost of meal</th>
+        <th>Enable</th>
         <th>created_at</th>
         <th>updated_at</th>
       </tr>
@@ -29,6 +30,7 @@
           <tr>
             <td><%= link_to "#{user.name}", edit_user_path(user), method: :get %></td>
             <td><%= user.cost_of_meal %></td>
+            <td><%= user.enable %></td>
             <td><%= user.created_at %></td>
             <td><%= user.updated_at %></td>
             <td><%= link_to 'Destroy', user_path(user), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>

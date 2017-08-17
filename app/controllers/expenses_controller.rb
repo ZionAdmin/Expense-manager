@@ -50,7 +50,7 @@ class ExpensesController < ApplicationController
   end
 
   def imports
-    @response = Expense.import_data(params[:user_suffix], params[:company_suffix], params[:file])
+    @response = Expense.import_data(params[:file],params[:user_suffix], params[:company_suffix])
 
   end
 

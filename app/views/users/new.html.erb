@@ -35,6 +35,13 @@
             <%= f.text_field :cost_of_meal, :onkeypress => "return isNumberKey(event)", :class => 'form-control required' %>
             </div>
           </div>
+          <div class="form-group">
+            <div class="form-line">
+              <%= f.check_box :enable, class: "filled-in" %>
+              <%= f.label :enable %>
+            </div>
+          </div>
+
           <button type="save" class="btn btn-success btn-cons">Save</button>
           <%= link_to 'Cancel', users_path, :class => "btn btn-danger btn-cons" %>
       <% end %>
