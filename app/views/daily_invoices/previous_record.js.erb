@@ -1,5 +1,4 @@
-expenses = jQuery.parseJSON('<%=raw @expenses.to_json %>')
-jQuery.each(expenses, function( index, value ) {
-  $('#daily_invoice_expense_user_ids_'+value.user_id).prop('checked', true);
-});
+<% @users.each do |user| %>
+  $('#daily_invoice_expense_user_ids_'+<%=user.id %>).prop('checked', true);
+<% end %>
 
