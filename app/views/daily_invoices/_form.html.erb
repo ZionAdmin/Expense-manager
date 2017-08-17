@@ -78,8 +78,10 @@
     <div class="form-group">
       <div class="row">
         <div class="col-xs-5">
+          <div class="c_expense", id="c_expense_id">
             <%= l.label :Type, style: "margin-right: 15px;" %>
-            <%= l.select :type, options_for_select(Expense::TYPES), { id: 'type'} %>
+            <%= l.select :type, options_for_select((Expense::TYPES)+@custom_expense_type_all.collect{|c| [c.name, c.id]}), {class: "selectpicker", id: 'daily_invoice_expense_type'} %>
+          </div>
         </div>
       </div>
     </div>
@@ -90,17 +92,3 @@
 <% end %>
 
 <!--Expense Details ends-->
-<script type="text/javascript">
-  $(document).ready(function () {
-    $('#cal1').click(function(){
-        $(".bill_date").datepicker({dateFormat: "yy-mm-dd"}).focus();
-      });
-    $('#cal2').click(function(){
-      $(".date").multiDatesPicker({dateFormat: "yy-mm-dd"}).focus();
-    });
-    $('#daily_invoice_is_prepaid').click(function(){
-        $("#bill_id").addClass("required");
-    });
-
-  });
-</script>

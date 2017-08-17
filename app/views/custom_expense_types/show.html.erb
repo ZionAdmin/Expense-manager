@@ -1,0 +1,17 @@
+<div class="col-xs-12">
+  <div class="card">
+    <div class="header">
+      <h1>Custom Expense Type Details</h1>
+    </div>
+    <div class="body">
+      <p>
+        <strong>Name:</strong>
+        <%= @custom_expense_type.name %>
+      </p>
+      <p>
+        <%= link_to 'Edit', edit_custom_expense_type_path(@custom_expense_type), :class => "btn btn-primary", method: :get %>
+        <%= link_to 'Back', custom_expense_types_path, :class => "btn btn-warning" %>
+      </p>
+    </div>
+  </div>
+</div>

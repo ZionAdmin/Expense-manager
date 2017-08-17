@@ -15,6 +15,44 @@
 
     <div class="body">
       <div class="row">
+
+        <%= form_for @custom_expense_type, remote: true do |c| %>
+
+            <div class="col-xs-12">
+              <div class="body">
+                <div class="container" style="width: 170%;">
+                  <div class="modal fade" id="custom_expense_modal_id" role="dialog">
+                    <div class="modal-dialog">
+
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <%= button_tag "x", class: "close", "data-dismiss": "modal" %>
+                          <h4 class="modal-title">New Custom Expense Type</h4>
+                        </div>
+                        <div class="modal-body">
+
+                          <%= c.label :Name %>
+                          <%= c.text_field :name %>
+
+                          <div class="modal-footer">
+                            <%= button_tag "save", class: "btn btn-success btn-cons" %>
+                            <%= button_tag "close", class: "btn btn-danger btn-cons", "data-dismiss": "modal" %>
+
+                          </div>
+
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+        <% end %>
+
         <!--Daily Invoices starts-->
         <%= form_for @daily_invoice, html: {id: "daily_invoice_form"} do |f| %>
             <% render partial: 'form', locals: {f: f} %>
