@@ -15,6 +15,8 @@
      resources :fruits_expenses, controller: "expenses", type: "FruitsExpense"
      resources :snaks_expenses, controller: "expenses", type: "SnaksExpense"
      resources :daily_invoices
+
+     match "previous_record" => "daily_invoices#previous_record", :as => :previous_record, :via => [:get]
      match "daily_details" => "daily_invoices#daily_details", :as => :daily_details, :via => [:get, :post]
      match "/"=> "expense_manager#dashboard",:via => [:get, :post]
      match "user_month_details" => "users#user_month_details",  :via => [:get, :post]

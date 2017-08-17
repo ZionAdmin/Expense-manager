@@ -9,14 +9,29 @@ class Expense < ApplicationRecord
   default_scope {where(deleted_at: nil)}
 
   TYPES = ["MealsExpense", "FruitsExpense", "SnaksExpense", "CustomExpense"]
+  HEADERS = ["Date","Cost of Meal","SZ_sp","TOTAL","Pending to Spend"]
 
   #
   # import_data
   #
   # params {FILE} file
-  def self.import_data(file, type = "MealsExpense", user_suffix = '_u', company_suffix = '_c')
+  def self.import_data(file, type = "MealsExpense", user_suffix, company_suffix)
+    row_hash = Hash.new
+    header_hash = Hash.new
     begin
       CSV.foreach(file.path, headers: true).with_index do |row, index|
+        row_hash = row.to_hash
+        HEADERS.each {|header| row_hash.delete header}
+        header_hash = row_hash.compact
+        raise  "Headers are missing" if(index == 0 && header_hash.empty?)
+        header_hash.each do |header_key, value|
+          if index == 0
+            if header_key.present? && header_key.include?(user_suffix)
+            else
+             raise "Headers are not matching"
+            end
+          end
+        end
         row.each do |header,value|
           if index == 0
             if header.present? && header.include?(user_suffix)
@@ -28,7 +43,8 @@ class Expense < ApplicationRecord
             if row["Date"] == 'Total pending amount'
               if header.present? && header.include?(user_suffix)
                 user_name = header.split('_u').first
-                user = User.find_or_create_by(name: user_name, pending_amount: value)
+                user = User.find_by(name: user_name)
+                user.update(pending_amount: value)
                 user.save(validate:false)
               end
             else
@@ -46,13 +62,16 @@ class Expense < ApplicationRecord
             end
           end
         end
-
       end
-      return {status: 'success'}
+      return  "success"
+    rescue Exception => e
+      return e.message
+    rescue Exception => e
+      return e.message
     rescue
-      return {status: 'failure'}
+      return  "failure"
+
     end
   end
-
 end
 
