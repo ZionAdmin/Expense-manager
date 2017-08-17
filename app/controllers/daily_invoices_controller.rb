@@ -119,6 +119,17 @@ class DailyInvoicesController < ApplicationController
     @total_amount = @total_amount.sum
   end
 
+  def previous_record
+    @daily_invoice = DailyInvoice.last
+    @expenses = @daily_invoice.expenses
+    @users =[]
+    @expenses.each do |exp|
+      @users << exp.user
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
   private
 
   #
