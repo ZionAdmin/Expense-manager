@@ -15,7 +15,6 @@
 //= require turbolinks
 //= require jquery-ui
 
-
 //= require admin
 //= require bootstrap
 //= require bootstrap-switch
@@ -26,8 +25,9 @@
 //= require bootstrap-notify
 //= require waves.min
 //= require jquery.slimscroll
-//= require form-validation
-//= require form-wizard
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require jquery.steps
 
 // = require_tree .
 

@@ -86,6 +86,6 @@ class UsersController < ApplicationController
   # user_params
   #
   def user_params
-    params.require(:user).permit(:name, :email, :cost_of_meal)
+    params.require(:user).permit(:name, :email, :cost_of_meal, :enable)
   end
 end

@@ -1,7 +1,7 @@
-<div class="col-md-10 col-md-offset-1">
-  <div class="panel panel-success">
-    <div class="panel-heading">Daily Details</div>
-    <div class="panel-body">
+<div class="col-xs-12">
+  <div class="card">
+    <div class="header">Daily Details</div>
+    <div class="body">
       <%= form_tag('/daily_details') do %>
           <div class="container-fluid">
             <div class="row">
@@ -13,7 +13,7 @@
               </div>
               <div class="col-sm-3">
                 <p>
-                  <%= button_tag "Submit" %>
+                  <%= button_tag "Submit", class: "btn btn-primary waves-effect" %>
                 </p>
               </div>
             </div>
@@ -21,9 +21,9 @@
       <% end %>
     </div>
   </div>
-  <div class="panel panel-info">
-    <div class="panel-heading">Results</div>
-    <div class="panel-body">
+  <div class="card">
+    <div class="header">Results</div>
+    <div class="body">
       <% if @date_error %>
           <div id="error_explaination">
             <ul>
@@ -57,7 +57,7 @@
             </tr>
             <tr>
               <td>Bill:</td>
-              <td><%= image_tag(daily_invoice.image.url) %></td>
+              <td><%= image_tag(daily_invoice.image.url, width: '90%;')  %></td>
             </tr>
             </tbody>
           </table>

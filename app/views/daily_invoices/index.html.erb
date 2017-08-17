@@ -1,72 +1,89 @@
-<div class="col-md-10 col-md-offset-1">
-  <h1>Expense Details</h1>
-  <div class="panel-group">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h4 class="panel-title">
-          Filter
-          <div class="pull-right" data-toggle="collapse" data-target="#demo">
-            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></div>
-        </h4>
-      </div>
+<div class="col-xs-12">
+  <div class="card">
+    <div class="header">
+      <h1> Expenses </h1>
+      <ul class="header-dropdown m-r--5">
+        <li class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <ul class="dropdown-menu pull-right">
+            <li><%= link_to 'Add New Expense', new_daily_invoice_path, method: :get, :class => "waves-effect waves-block" %></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
 
-      <div id="demo" class="panel-body collapse panel-collapse">
-        <%= form_tag(daily_invoices_path, :method => "get", id: "filter-form") do %>
-            <div class="row">
-              <div class="col-xs-12 filter-label">
-                <label for="type">Types:</label>
-                <% Expense::TYPES.each do |type| %>
-                    <% @expense_checked = params[:type_ids] %>
-                    <div class="checkbox-inline filter-type">
-                      <% if params[:type_ids].present? && (params[:type_ids].include? type.to_s) %>
-                          <%= check_box_tag "type_ids[]", type, @expense_checked %>
-                      <% else %>
-                          <%= check_box_tag "type_ids[]", type %>
-                      <% end %>
-                      <%= type %>
+          <div class="body">
+            <div class="row clearfix">
+              <div class="col-xs-12 ">
+                <div class="panel-group" id="accordion_1" role="tablist" aria-multiselectable="true">
+                  <div class="panel panel-primary">
+                    <div class="panel-heading" role="tab" id="headingOne_1">
+                      <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion_1" href="#collapseOne_1" aria-expanded="true" aria-controls="collapseOne_1">
+                          Filter
+                        </a>
+                      </h4>
                     </div>
-                <% end %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-5 filter-label">
-                <label for="date">Date:</label>
-                <div class="checkbox-inline filter-date">
-                  <input type="text" name="date" value="<%= params[:date] %>" class="date"/>
+
+                    <div id="collapseOne_1" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne_1">
+                      <div class="panel-body">
+                        <%= form_tag(daily_invoices_path, method: :get, id: "filter-form") do %>
+                            <div class="row">
+                              <div class="col-xs-12 filter-label">
+                                <label for="type">Types:</label>
+                                <% ((Expense::TYPES)+@custom_expense_type_all).each do |type| %>
+                                    <% @expense_checked = params[:type_ids] %>
+                                    <div class="checkbox-inline filter-type ">
+                                      <% if params[:type_ids].present? && (params[:type_ids].include? type.to_s) %>
+                                          <%= check_box_tag "type_ids[#{type}]", type, @expense_checked, class: "filled-in" %>
+                                          <%= label_tag "type_ids[#{type}]", type %>
+                                      <% else %>
+                                          <%= check_box_tag "type_ids[#{type}]", 'yes', false, class: "filled-in" %>
+                                          <%= label_tag "type_ids[#{type}]", type %>
+                                      <% end %>
+                                    </div>
+                                <% end %>
+                              </div>
+                            </div>
+
+                            <div class="row">
+                              <div class="col-xs-12 filter-label">
+                                <label for="date">Date:</label>
+                                <div class="checkbox-inline filter-date">
+                                  <input type="text" name="date" value="<%= params[:date] %>" class="date form-control"/>
+                                </div>
+                              </div>
+                            </div>
+                            <div clas="clearfix"></div>
+                            <br/>
+                            <div class="row">
+                              <div class="col-xs-12 form-group filter-label pull-left">
+                                <%= submit_tag "Apply", name: nil, class: "btn btn-success btn-cons" %>
+                                <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
+                              </div>
+                            </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div clas="clearfix"></div>
-            <br/>
-            <div class="row">
-              <div class="col-xs-12 form-group filter-label pull-left">
-                <%= submit_tag "Apply", name: nil, class: "btn btn-success btn-cons" %>
-                <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
-              </div>
-            </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+          </div>
 
-
-
-  <div class="panel-group">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="pull-left">
-          <%= link_to 'Add Expense', new_daily_invoice_path, :class => "btn btn-primary" %>
-        </div>
-        <div class="clearfix"></div>
+          <div class="clearfix"></div>
         <p></p>
-        <div class="content table-responsive table-full-width">
-          <table class="table">
+        <div class="body table-responsive">
+          <table class="table table-bordered">
             <thead>
             <tr>
               <th>Bill Date</th>
               <th>Restaurant Name</th>
               <th>Amount</th>
               <th>Type</th>
+              <th>Custom Expense Type</th>
               <th>Download</th>
               <th>Action</th>
             </tr>
@@ -78,6 +95,7 @@
                   <td><%= dailyinvoice.restaurant_name %></td>
                   <td><%= dailyinvoice.amount %></td>
                   <td><%= dailyinvoice.expenses.first.type rescue nil %></td>
+                  <td><%= dailyinvoice.expenses.first.custom_expense_type.name rescue nil %></td>
                   <td><%= link_to "ViewBill", dailyinvoice.image.url, download: "ViewBill" %></td>
                   <td><%= link_to 'Show', daily_invoice_path(dailyinvoice) %>
                     | <%#= link_to 'Edit', edit_daily_invoice_path(dailyinvoice) %> |
@@ -96,12 +114,11 @@
               </div>
             </div>
         <% end %>
-        <div class="text-center"><%= will_paginate @daily_invoices, renderer: BootstrapPagination::Rails %></div>
+        <div class="text-center"><%= will_paginate @daily_invoices, renderer: BootstrapPagination::Rails  %></div>
+        </div>
       </div>
     </div>
   </div>
-
-</div>
 
 <script type="text/javascript">
     $(document).ready(function () {

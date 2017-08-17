@@ -1,11 +1,27 @@
-<div class="col-md-10 col-md-offset-1">
-  <h1>List Of User Payments</h1>
-  <div class="content table-responsive table-full-width">
-    <table class="table table-hover">
+<div class="col-xs-12">
+  <div class="card">
+    <div class="header">
+      <h1> User Payments</h1>
+      <ul class="header-dropdown m-r--5">
+        <li class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <ul class="dropdown-menu pull-right">
+            <li><%= link_to 'Add New UserPayment', new_user_payment_path, method: :get, class: "waves-effect waves-block" %></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+
+  <div class="body table-responsive">
+    <table class="table table-bordered">
     <thead>
     <tr>
       <th>User</th>
       <th>Amount_Paid</th>
+      <th>Pending_Amount</th>
       <th>Payment_Gateway</th>
       <th>Date</th>
       <th>Comment</th>
@@ -18,6 +34,7 @@
         <tr>
           <td><%= userpayment.user.name %></td>
           <td><%= userpayment.amount_paid %></td>
+          <td><%= (userpayment.user.pending_amount.to_i - userpayment.amount_paid.to_i) %></td>
           <td><%= userpayment.payment_mode.payment_gateway %></td>
           <td><%= userpayment.date %></td>
           <td><%= userpayment.comment %></td>
@@ -28,8 +45,6 @@
     <% end %>
     </tbody>
   </table>
-  <p>
-    <%= link_to 'New UserPayment', new_user_payment_path, :class => "btn btn-primary" %>
-  </p>
+  </div>
 </div>
 </div>

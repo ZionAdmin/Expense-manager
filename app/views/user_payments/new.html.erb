@@ -1,23 +1,27 @@
-<div class="col-md-10 col-md-offset-1">
-  <div class="panel panel-success">
-    <div class="panel-heading">Add User Payments</div>
-    <div class="panel-body">
-      <%= form_for (@userpayment) do |f| %>
+<div class="col-xs-12">
+  <div class="card">
+    <div class="header">Add User Payments</div>
+    <div class="body">
+      <%= form_for (@userpayment), html: {id: "user_payment_form"} do |f| %>
           <div class="form-group">
-            <%= f.label :User %>
+            <%= f.label :User, style: "margin-right: 15px;" %>
             <%= f.select 'user_id', options_for_select(@users.collect {|u| [u.name, u.id]}), :class => 'form-control' %>
           </div>
           <div class="form-group">
+            <div class="form-line">
             <%= f.label :Amount_paid %>
-            <%= f.text_field :amount_paid, :class => 'form-control' %>
+            <%= f.text_field :amount_paid, :class => 'form-control required' %>
+            </div>
           </div>
           <div class="form-group">
-            <%= f.label :Payment_gateway %>
+            <%= f.label :Payment_gateway, style: "margin-right: 15px;" %>
             <%= f.select 'payment_mode_id', options_for_select(@paymentmodes.collect {|u| [u.payment_gateway, u.id]}), :class => 'form-control' %>
           </div>
           <div class="form-group">
+            <div class="form-line">
             <%= f.label :Comment %>
-            <%= f.text_area :comment, :class => 'form-control', :id => 'comment' %>
+            <%= f.text_area :comment, :class => 'form-control required', :id => 'comment' %>
+            </div>
           </div>
           <div class="form-group">
             <div class="container-fluid">
@@ -25,7 +29,7 @@
                 <div class="col-sm-3">
 
                   <%= f.label :Date %>
-                  <%= f.text_field :date, :class => 'form-control', :id => 'user_payment_date' %>
+                  <%= f.text_field :date, :class => 'form-control required', :id => 'user_payment_date' %>
                 </div>
               </div>
             </div>
