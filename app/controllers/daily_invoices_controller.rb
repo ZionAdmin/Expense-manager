@@ -54,6 +54,8 @@ class DailyInvoicesController < ApplicationController
 
         @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
         @expense.user_id = user_id
+        user_obj = User.find(user_id)
+        user_obj.update(amount_to_be_paid: (user_obj.amount_to_be_paid+user_obj.cost_of_meal))
         @expense.save
       end
     end
