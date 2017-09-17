@@ -1,6 +1,5 @@
 $(document).ready(function () {
     $("#daily_invoice_form").validate();
-    $('.selectpicker').selectpicker();
 
     $('#cal1').click(function(){
         $(".bill_date").datepicker({dateFormat: "yy-mm-dd"}).focus();

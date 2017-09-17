@@ -29,7 +29,7 @@
 //= require jquery.validate.additional-methods
 //= require jquery.steps
 
-// = require_tree .
+//= require_tree .
 
 $(document).on('turbolinks:load', function() {
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
