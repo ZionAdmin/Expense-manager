@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $("#daily_invoice_form").validate();
+
 
     $('#cal1').click(function(){
         $(".bill_date").datepicker({dateFormat: "yy-mm-dd"}).focus();
@@ -8,13 +8,19 @@ $(document).ready(function () {
         $(".date").multiDatesPicker({dateFormat: "yy-mm-dd"}).focus();
     });
 
+    custom_expense();
+
+});
+
+function custom_expense() {
+
     $('#daily_invoice_expense_type').on('change', function () {
 
         if($("#daily_invoice_expense_type").val() == "CustomExpense")
         {
-            $("#custom_expense_modal_id").modal('show');
+            $("#custom_expenses_link").trigger('click');
         }
 
     });
 
-});
+}

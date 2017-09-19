@@ -22,7 +22,6 @@
 //= require bootstrap-multiselect
 //= require bootstrap3-editable/bootstrap-editable
 //= require jquery-ui.multidatespicker
-//= require bootstrap-notify
 //= require waves.min
 //= require jquery.slimscroll
 //= require jquery.validate

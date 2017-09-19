@@ -23,20 +23,16 @@
           <td><%= @daily_invoice.restaurant_name %></td>
         </tr>
         <tr>
-          <th>Had Meal</th>
-          <td><%= @expense_array.first.had_lunch? ? 'Yes' : 'No' %></td>
-        </tr>
-        <tr>
           <th>Amount</th>
           <td><%= @daily_invoice.amount %></td>
         </tr>
         <tr>
           <th>Prepaid</th>
-          <td><%= @daily_invoice.prepaid %></td>
+          <td><%= @daily_invoice.try(:prepaid) %></td>
         </tr>
         <tr>
           <th>Type</th>
-          <td><%= @expense_array.first.type %></td>
+          <td><%= @expense_array.first.try(:type) %></td>
         </tr>
         <tr>
           <th>Custom Expense Type</th>

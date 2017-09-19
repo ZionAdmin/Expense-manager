@@ -6,7 +6,7 @@ class Expense < ApplicationRecord
 
   validate :user_id
 
-  default_scope {where(deleted_at: nil)}
+  default_scope { where(deleted_at: nil) }
 
   TYPES = ["MealsExpense", "FruitsExpense", "SnaksExpense", "CustomExpense"]
   HEADERS = ["Date","Cost of Meal","SZ_sp","TOTAL","Pending to Spend"]
@@ -36,7 +36,7 @@ class Expense < ApplicationRecord
           if index == 0
             if header.present? && header.include?(user_suffix)
               user_name = header.split('_u').first
-              user = User.find_or_create_by(name: user_name, cost_of_meal: value)
+              user = User.find_or_create_by(name: user_name, cost_of_meal: value, enable: true)
               user.save(validate:false)
             end
           else

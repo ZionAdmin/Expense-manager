@@ -16,7 +16,7 @@ class DailyInvoicesController < ApplicationController
       @daily_invoices = @daily_invoices.joins(:expenses).where('expenses.custom_expense_type_id = ?', @custom_exp_type_obj.ids).distinct
     end
     @daily_invoices = @daily_invoices.where('daily_invoices.date=?', "#{params[:date]}") if params[:date].present?
-    @daily_invoices = @daily_invoices.paginate(:page => params[:page], :per_page => 15)
+    @daily_invoices = @daily_invoices.order(id: :desc).paginate(:page => params[:page], :per_page => 15)
   end
 
   #
@@ -34,6 +34,7 @@ class DailyInvoicesController < ApplicationController
   #
   def edit
     @daily_invoice = DailyInvoice.find(params[:id])
+    @custom_expense_type_all = CustomExpenseType.all
     @daily_invoice.expenses
   end
 
@@ -88,18 +89,32 @@ class DailyInvoicesController < ApplicationController
   # update
   #
   def update
+
     @daily_invoice = DailyInvoice.find(params[:id])
 
     date_array = params[:daily_invoice][:expense][:date].split(',')
     user_ids = params[:daily_invoice][:expense][:user_ids]
 
+    @daily_invoice.expenses.each{|expense| expense.destroy}
+
     date_array.each do |date|
       
       user_ids.each do |user_id|
-        
-        @expense = @daily_invoice.expenses
-        @expense = @expense.update(daily_invoice_id: params[:id], date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch], type: params[:daily_invoice][:expense][:type])
-        # @expense.update :user_id => user_id
+
+
+        @expense = Expense.new(daily_invoice_id: @daily_invoice.id, date: date, had_lunch: params[:daily_invoice][:expense][:had_lunch])
+
+        default_expense_types = ["MealsExpense", "FruitsExpense", "SnaksExpense"]
+
+        if(default_expense_types.include? params[:daily_invoice][:expense][:type])
+          @expense.type = params[:daily_invoice][:expense][:type]
+        else
+          @expense.type = "CustomExpense"
+          @expense.custom_expense_type_id = params[:daily_invoice][:expense][:type]
+        end
+        @expense.user_id = user_id
+        @expense.save
+
       end
     end
     @daily_invoice = @daily_invoice.update(daily_invoice_params)

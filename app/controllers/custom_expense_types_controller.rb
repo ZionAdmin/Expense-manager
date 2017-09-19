@@ -10,6 +10,10 @@ class CustomExpenseTypesController < ApplicationController
 
   def new
     @custom_expense_type = CustomExpenseType.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def edit

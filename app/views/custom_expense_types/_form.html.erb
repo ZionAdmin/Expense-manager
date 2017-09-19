@@ -1,0 +1,28 @@
+<div class="modal-dialog">
+
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">New Custom Expense Type</h4>
+    </div>
+    <%= form_for @custom_expense_type, url: custom_expense_types_path, remote: true do |f| %>
+        <div class="modal-body">
+
+
+          <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </div>
+
+
+          <div class="modal-footer">
+            <%= button_tag "save", class: "btn btn-success btn-cons" %>
+            <%= link_to "close", "Javascript:void(0)", class: "btn btn-danger btn-cons", "data-dismiss": "modal" %>
+
+          </div>
+    <%end%>
+
+    </div>
+  </div>
+
+</div>
+</div>

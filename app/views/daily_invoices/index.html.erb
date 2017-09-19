@@ -97,8 +97,8 @@
                   <td><%= dailyinvoice.expenses.first.type rescue nil %></td>
                   <td><%= dailyinvoice.expenses.first.custom_expense_type.name rescue nil %></td>
                   <td><%= link_to "ViewBill", dailyinvoice.image.url, download: "ViewBill" %></td>
-                  <td><%= link_to 'Show', daily_invoice_path(dailyinvoice) %>
-                    | <%#= link_to 'Edit', edit_daily_invoice_path(dailyinvoice) %> |
+                  <td><%= link_to 'Show', daily_invoice_path(dailyinvoice), method: :get %>
+                    | <%= link_to 'Edit', edit_daily_invoice_path(dailyinvoice), method: :get %> |
                     <%= link_to 'Destroy', daily_invoice_path(dailyinvoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
                 </tr>
             <% end %>
