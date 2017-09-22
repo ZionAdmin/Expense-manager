@@ -1,0 +1,39 @@
+<div class="col-xs-12">
+  <div class = "card">
+    <div class="header">
+      <h1> Custom Expenses Types</h1>
+      <ul class="header-dropdown m-r--5">
+        <li class="dropdown">
+          <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true">
+            <i class="material-icons">more_vert</i>
+          </a>
+          <ul class="dropdown-menu pull-right">
+            <li><%= link_to 'New Custom Expense', new_custom_expense_type_path, method: :get, :class => "waves-effect waves-block", remote: true %></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="body table-responsive">
+      <table class="table table-bordered">
+
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>created_at</th>
+          <th>updated_at</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @custom_expense_types.each do |custom_expense_type| %>
+            <tr>
+              <td><%= custom_expense_type.name %></td>
+              <td><%= custom_expense_type.created_at %></td>
+              <td><%= custom_expense_type.updated_at %></td>
+              <td><%= link_to 'Destroy', custom_expense_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

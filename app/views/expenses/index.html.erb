@@ -1,0 +1,38 @@
+<div class="col-xs-12">
+  <div class="card">
+    <div class="header">
+      <h2>Import Expenses</h2>
+    </div>
+    <div class="body">
+      <%= form_tag(imports_expenses_path, multipart: true, id: 'expense_index_id') do %>
+          <div>
+            <h3>Enter Preferences</h3>
+            <section>
+              <div class="form-group">
+                <div class="form-line">
+                  <%= label_tag 'user_suffix' %>
+                  <%= text_field_tag 'user_suffix', nil, class: 'form-control' %>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="form-line">
+                  <%= label_tag 'company_suffix' %>
+                  <%= text_field_tag 'company_suffix', nil, class: 'form-control' %>
+                </div>
+              </div>
+            </section>
+            <h3>Upload File</h3>
+            <section>
+              <div class="form-group">
+                <%= label_tag :file, 'Upload File'%>
+                <%= file_field_tag :file, accept: 'text/csv' %>
+              </div>
+            </section>
+          </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+

@@ -1,0 +1,9 @@
+$("#modal-container").modal('hide');
+if($("#c_expense_id").length) {
+    $('#c_expense_id').html("<%= escape_javascript render(partial: 'custom_expense_types/custom_expense_type') %>");
+    custom_expense();
+}
+else {
+    location.reload();
+}
+

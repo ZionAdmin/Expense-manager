@@ -15,14 +15,21 @@
 //= require turbolinks
 //= require jquery-ui
 
-
+//= require admin
 //= require bootstrap
 //= require bootstrap-switch
 //= require bootstrap-select
 //= require bootstrap-multiselect
 //= require bootstrap3-editable/bootstrap-editable
 //= require jquery-ui.multidatespicker
+//= require waves.min
+//= require jquery.slimscroll
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require jquery.steps
 
 //= require_tree .
 
-
+$(document).on('turbolinks:load', function() {
+    setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
+});

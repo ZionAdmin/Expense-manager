@@ -1,0 +1,8 @@
+<%= select_tag 'daily_invoice[expense][type]', options_for_select((Expense::TYPES)+@custom_expense_type_all.collect{|c| [c.name, c.id]}, [@custom_expense_type_all.last.name, @custom_expense_type_all.last.id]), {class: "selectpicker", id: 'daily_invoice_expense_type'} %>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.selectpicker').selectpicker();
+    });
+</script>

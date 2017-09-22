@@ -3,67 +3,86 @@
       <h2><%= pluralize(@daily_invoice.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
         <% @daily_invoice.errors.full_messages.each do |message| %>
-            <li><%= message %>
-            </li>
+            <li><%= message %></li>
         <% end %>
       </ul>
     </div>
 <% end %>
 
-<div class="col-sm-6">
-  <div class="form-group">
+<div class="col-xs-6">
+  <div class="form-group ">
+    <div class="form-line">
     <%= f.label :Restaurant_Name %>
     <%= f.text_field :restaurant_name, class: 'form-control', required: true %>
+    </div>
   </div>
   <div class="help-block with-errors"></div>
   <div class="form-group">
+    <div class="form-line">
     <%= f.label :Amount %>
-    <%= f.text_field :amount, class: 'form-control', required: true%>
+    <%= f.text_field :amount, class: 'form-control', required: true %>
+    </div>
   </div>
   <div class="form-group">
     <div class="row">
-      <div class="col-sm-5">
-        <%= f.label :Bill_Date %>
-        <%= f.text_field :date, class: 'form-control bill_date' %>
+      <div class="col-xs-5">
+        <div class="demo-google-material-icon">
+            <%= f.label :Bill_Date %>
+            <span class="icon-name"><i class="material-icons", id="cal1", style = "position: absolute; margin-top: -3px;">date_range</i></span>
+            <%= f.text_field :date, class: 'form-control bill_date', required: true %>
+        </div>
       </div>
     </div>
   </div>
   <div class="form-group">
+    <h5>Type</h5>
+      <%= f.check_box :is_prepaid, class: "filled-in" %>
+      <%= f.label :is_prepaid %>
+  </div>
+  <div class="form-group">
     <%= f.label :Bill %>
-    <%= f.file_field :image, class: 'form-control', required: true%>
+    <%= f.file_field :image, class: 'form-control', id: 'bill_id' %>
   </div>
 </div>
+
 <!--Expense Details starts-->
 <%= f.fields_for :expense do |l| %>
     <div class="col-sm-6">
       <%= l.hidden_field :daily_invoice_id %>
       <div class="form-group">
-        <%= l.label :Users %></br>
-        <% User.all.each do |c| %>
-            <div class="checkbox-inline">
-              <%= check_box_tag "daily_invoice[expense][user_ids][]", c.id %>
-              <%= label_tag "daily_invoice[expense][user_ids][][#{c.id}]", c.name %>
-            </div>
-        <% end %>
+        <div class="checkboxinline">
+          <%= l.label :Users %></br>
+          <% User.active_users.each do |c| %>
+              <%= check_box_tag "daily_invoice[expense][user_ids][#{c.id}]", c.id, @daily_invoice.expenses.collect{|x|x.user_id}.include?(c.id), class: "filled-in" %>
+              <%= label_tag "daily_invoice[expense][user_ids][#{c.id}]", c.name %>
+          <% end %>
+        </div>
       </div>
       <div class="form-group">
         <div class="row">
-          <div class="col-sm-5">
-            <%= l.label :Date %>
-            <%= l.text_field :date, class: 'form-control date', required: true%>
+          <div class="col-xs-12">
+            <div class="demo-google-material-icon">
+                <%= l.label :Date %>
+                <i class="material-icons" id="cal2" style = "position: absolute; margin-top: -3px;">date_range</i>
+                <span class="icon-name"></span>
+                <%= l.text_field :date, class: 'form-control date', required: true %>
+            </div>
           </div>
         </div>
       </div>
       <div class="form-group">
-        <%= l.label :Had_Lunch %>
-        <%= l.select :had_lunch, options_for_select({'Yes': '1', 'No':'0'}), {class: 'form-control', id: 'hadlunch'} %>
+        <%= l.label :Had_Lunch, style: "margin-right: 15px;" %>
+        <%= l.select :had_lunch, options_for_select({'Yes': '1', 'No':'0'}), {},  {class: 'form-control show-tick dropup', id: 'hadlunch'} %>
       </div>
     </div>
     <div class="form-group">
       <div class="row">
-        <div class="col-sm-5">
-          <%= l.label :Type %>
-          <%= l.select :type, options_for_select({'Meals Expense': 'MealsExpense', 'Fruits Expense':'FruitsExpense', 'Snaks Expense':'SnaksExpense'}), {class: 'form-control', id: 'type'} %>
+        <div class="col-xs-5">
+          <%= l.label :type, style: "margin-right: 15px;" %>
+          <div class="c_expense" id="c_expense_id">
+            <%= l.select :type, options_for_select((Expense::TYPES)+@custom_expense_type_all.collect{|c| [c.name, c.id]}), {},  {class: "form-control", id: 'daily_invoice_expense_type'} %>
+          </div>
+          <%= link_to "Javascript:void(0)", new_custom_expense_type_path , remote: true, class:"hide", method: :get, id:"custom_expenses_link"%>
         </div>
       </div>
     </div>
@@ -72,10 +91,5 @@
       <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
     </div>
 <% end %>
+
 <!--Expense Details ends-->
-<script type="text/javascript">
-  $(document).ready(function () {
-    $(".bill_date").datepicker({dateFormat: "yy-mm-dd"});
-    $(".date").multiDatesPicker();
-  });
-</script>

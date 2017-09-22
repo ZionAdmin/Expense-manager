@@ -1,10 +1,20 @@
-source 'https://rubygems.org' 
+source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 # Use sqlite3 as the database for Active Record
 #gem 'sqlite3'
+
+group :development, :test, :stage do
+  ruby "2.4.1"
+end
+
+group :development, :test do
+  gem "pry-byebug"
+end
+
+gem "pry-rails"
 
 gem 'mysql2'
 # gem 'bootstrap'
@@ -39,6 +49,7 @@ gem 'coffee-rails', '~> 4.2'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'jquery-validation-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
