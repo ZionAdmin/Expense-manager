@@ -8,7 +8,7 @@
             <i class="material-icons">more_vert</i>
           </a>
           <ul class="dropdown-menu pull-right">
-            <li><%= link_to 'Add New Expense', new_daily_invoice_path, method: :get, :class => "waves-effect waves-block" %></li>
+            <li><%= link_to 'Add New Expense', new_invoice_path, method: :get, :class => "waves-effect waves-block" %></li>
           </ul>
         </li>
       </ul>
@@ -29,7 +29,7 @@
 
                     <div id="collapseOne_1" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne_1">
                       <div class="panel-body">
-                        <%= form_tag(daily_invoices_path, method: :get, id: "filter-form") do %>
+                        <%= form_tag(invoices_path, method: :get, id: "filter-form") do %>
                             <div class="row">
                               <div class="col-xs-12 filter-label">
                                 <label for="type">Types:</label>
@@ -61,7 +61,7 @@
                             <div class="row">
                               <div class="col-xs-12 form-group filter-label pull-left">
                                 <%= submit_tag "Apply", name: nil, class: "btn btn-success btn-cons" %>
-                                <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
+                                <%= link_to 'Cancel', invoices_path, class: "btn btn-danger btn-cons" %>
                               </div>
                             </div>
                         <% end %>
@@ -89,23 +89,23 @@
             </tr>
             </thead>
             <tbody>
-            <% @daily_invoices.each do |dailyinvoice| %>
+            <% @invoices.each do |invoice| %>
                 <tr>
-                  <td><%= link_to dailyinvoice.date.strftime("%d-%m-%Y"), daily_invoice_path(dailyinvoice) %> </td>
-                  <td><%= dailyinvoice.restaurant_name %></td>
-                  <td><%= dailyinvoice.amount %></td>
-                  <td><%= dailyinvoice.expenses.first.type rescue nil %></td>
-                  <td><%= dailyinvoice.expenses.first.custom_expense_type.name rescue nil %></td>
-                  <td><%= link_to "ViewBill", dailyinvoice.image.url, download: "ViewBill" %></td>
-                  <td><%= link_to 'Show', daily_invoice_path(dailyinvoice) %>
+                  <td><%= link_to invoice.date.strftime("%d-%m-%Y"), invoice_path(invoice) %> </td>
+                  <td><%= invoice.restaurant_name %></td>
+                  <td><%= invoice.amount %></td>
+                  <td><%= invoice.expenses.first.type rescue nil %></td>
+                  <td><%= invoice.expenses.first.custom_expense_type.name rescue nil %></td>
+                  <td><%= link_to "ViewBill", invoice.image.url, download: "ViewBill" %></td>
+                  <td><%= link_to 'Show', invoice_path(invoice) %>
                     | <%#= link_to 'Edit', edit_daily_invoice_path(dailyinvoice) %> |
-                    <%= link_to 'Destroy', daily_invoice_path(dailyinvoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
+                    <%= link_to 'Destroy', invoice_path(invoice), :method => :delete, :data => {:confirm => 'Are you sure?'} %></td>
                 </tr>
             <% end %>
             </tbody>
           </table>
         </div>
-        <% if @daily_invoices.blank? %>
+        <% if @invoices.blank? %>
             <div id="error_explaination">
               <div class="alert alert-danger alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -114,7 +114,7 @@
               </div>
             </div>
         <% end %>
-        <div class="text-center"><%= will_paginate @daily_invoices, renderer: BootstrapPagination::Rails  %></div>
+        <div class="text-center"><%= will_paginate @invoices, renderer: BootstrapPagination::Rails  %></div>
         </div>
       </div>
     </div>

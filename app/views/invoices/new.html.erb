@@ -54,7 +54,7 @@
         <% end %>
 
         <!--Daily Invoices starts-->
-        <%= form_for @daily_invoice, html: {id: "daily_invoice_form"} do |f| %>
+        <%= form_for @invoice, html: {id: "invoice_form"} do |f| %>
             <% render partial: 'form', locals: {f: f} %>
         <% end %>
         <!--Daily Invoices ends-->

@@ -1,0 +1,4 @@
+<% @users.each do |user| %>
+  $('#invoice_expense_user_ids_'+<%=user.id %>).prop('checked', true);
+<% end %>
+

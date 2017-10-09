@@ -1,6 +1,6 @@
   Rails.application.routes.draw do
   resources :custom_expense_types
-     root "daily_invoices#index"
+     root "invoices#index"
      resources :users
      resources :expenses do
        collection do
@@ -14,10 +14,11 @@
      end
      resources :fruits_expenses, controller: "expenses", type: "FruitsExpense"
      resources :snaks_expenses, controller: "expenses", type: "SnaksExpense"
-     resources :daily_invoices
+     resources :invoices
 
-     match "previous_record" => "daily_invoices#previous_record", :as => :previous_record, :via => [:get]
-     match "daily_details" => "daily_invoices#daily_details", :as => :daily_details, :via => [:get, :post]
+     match "invoice_params" => "invoices#invoice_params", :as => :invoice_params, :via => [:get, :post]
+     match "previous_record" => "invoices#previous_record", :as => :previous_record, :via => [:get]
+     match "daily_details" => "invoices#daily_details", :as => :daily_details, :via => [:get, :post]
      match "/"=> "expense_manager#dashboard",:via => [:get, :post]
      match "user_month_details" => "users#user_month_details",  :via => [:get, :post]
      match "month_info" => "users#month_info", :via => [:get, :post]

@@ -4,7 +4,7 @@
     <div class="body">
       <div class="row">
         <!--Daily Invoices starts-->
-        <%= form_for @daily_invoice, url: daily_invoice_path(@daily_invoice), method: "patch" do |f| %>
+        <%= form_for @invoice, url: invoice_path(@invoice), method: "patch" do |f| %>
             <% render partial: 'form', locals: {f: f} %>
         <% end %>
         <!--Daily Invoices ends-->

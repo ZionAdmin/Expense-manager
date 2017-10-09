@@ -1,8 +1,8 @@
-<% if @daily_invoice.errors.any? %>
+<% if @invoice.errors.any? %>
     <div id="error_explaination">
-      <h2><%= pluralize(@daily_invoice.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(@invoice.errors.count, "error") %> prohibited this user from being saved:</h2>
       <ul>
-        <% @daily_invoice.errors.full_messages.each do |message| %>
+        <% @invoice.errors.full_messages.each do |message| %>
             <li><%= message %></li>
         <% end %>
       </ul>
@@ -48,13 +48,13 @@
 <!--Expense Details starts-->
 <%= f.fields_for :expense do |l| %>
     <div class="col-sm-6">
-      <%= l.hidden_field :daily_invoice_id %>
+      <%= l.hidden_field :invoice_id %>
       <div class="form-group">
         <div class="checkboxinline">
           <%= l.label :Users %></br>
           <% User.active_users.each do |c| %>
-              <%= check_box_tag "daily_invoice[expense][user_ids][#{c.id}]", c.id, @daily_invoice.expenses.collect{|x|x.user_id}.include?(c.id), class: "filled-in" %>
-              <%= label_tag "daily_invoice[expense][user_ids][#{c.id}]", c.name %>
+              <%= check_box_tag "invoice[expense][user_ids][#{c.id}]", c.id, @invoice.expenses.collect{|x|x.user_id}.include?(c.id), class: "filled-in" %>
+              <%= label_tag "invoice[expense][user_ids][#{c.id}]", c.name %>
           <% end %>
         </div>
       </div>
@@ -80,14 +80,14 @@
         <div class="col-xs-5">
           <div class="c_expense", id="c_expense_id">
             <%= l.label :Type, style: "margin-right: 15px;" %>
-            <%= l.select :type, options_for_select((Expense::TYPES)+@custom_expense_type_all.collect{|c| [c.name, c.id]}), {class: "selectpicker", id: 'daily_invoice_expense_type'} %>
+            <%= l.select :type, options_for_select((Expense::TYPES)+@custom_expense_type_all.collect{|c| [c.name, c.id]}) %>
           </div>
         </div>
       </div>
     </div>
     <div class="form-group text-center">
       <%= button_tag "Save", class: "btn btn-success btn-cons" %></button>
-      <%= link_to 'Cancel', daily_invoices_path, class: "btn btn-danger btn-cons" %>
+      <%= link_to 'Cancel', invoices_path, class: "btn btn-danger btn-cons" %>
     </div>
 <% end %>
 

@@ -36,7 +36,7 @@
             </ul>
           </div>
       <% end %>
-      <% @daily_invoices.each do |daily_invoice| %>
+      <% @invoices.each do |invoice| %>
           <table class="table table-bordered">
             <tbody>
             <tr>
@@ -45,19 +45,19 @@
             </tr>
             <tr>
               <td>Restaurant name:</td>
-              <td><%= daily_invoice.restaurant_name %></td>
+              <td><%= invoice.restaurant_name %></td>
             </tr>
             <tr>
               <td>Amount:</td>
-              <td><%= daily_invoice.amount %></td>
+              <td><%= invoice.amount %></td>
             </tr>
             <tr>
               <td>Date:</td>
-              <td><%= daily_invoice.date %></td>
+              <td><%= invoice.date %></td>
             </tr>
             <tr>
               <td>Bill:</td>
-              <td><%= image_tag(daily_invoice.image.url, width: '90%;')  %></td>
+              <td><%= image_tag(invoice.image.url, width: '90%;')  %></td>
             </tr>
             </tbody>
           </table>

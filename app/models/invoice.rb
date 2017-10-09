@@ -1,4 +1,4 @@
-class DailyInvoice < ApplicationRecord
+class Invoice < ApplicationRecord
   acts_as_paranoid
 
   has_many :expenses, :dependent => :destroy

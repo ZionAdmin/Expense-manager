@@ -6,7 +6,7 @@
     <div class="body">
       <% if @response == "success" %>
           <div class="alert alert-success">
-            <%= @response %> <%= link_to "Ok", daily_invoices_path, method: :get, style:'float: right;' %>
+            <%= @response %> <%= link_to "Ok", invoices_path, method: :get, style:'float: right;' %>
           </div>
       <% else %>
           <div class="alert alert-danger">
